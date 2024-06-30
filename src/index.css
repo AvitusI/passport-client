@@ -1,3 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner:wght@400..700&family=Fira+Code:wght@300..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sevillana&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    font-family: "Poppins", sans-serif;
+    color-scheme: dark;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+
+textarea::-webkit-scrollbar {
+      width: 6px;
+}
+textarea::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+}
+textarea::-webkit-scrollbar-track {
+      background-color: rgba(0, 0, 0, 0.1);
+}
+
+.message::-webkit-scrollbar {
+      width: 6px;
+}
+.message::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+}
+.message::-webkit-scrollbar-track {
+      background-color: rgba(0, 0, 0, 0.1);
+}

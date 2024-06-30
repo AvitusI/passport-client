@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { LogOut } from "lucide-react";
 
 import { useUser } from "../context/UserContext";
 
@@ -19,7 +20,7 @@ const Logout = () => {
             
             if (result.status === 200) {
                 updateUser(null)
-                navigate('/signin')
+                navigate('/')
             } else {
                 console.error('Logout failed')
             }
@@ -31,9 +32,10 @@ const Logout = () => {
     return (
         <button
             onClick={handleLogout}
-            className="py1 px-2 rounded bg-black text-white hover:bg-black/15"
+            className="flex justify-center items-center py-1 px-2 space-x-3 rounded-full bg-orange-500 text-white hover:bg-orange-700"
         >
-            Logout
+            <LogOut />
+            <span>Logout</span>
         </button>
     )
 }

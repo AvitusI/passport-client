@@ -12,6 +12,10 @@ const UserContext = createContext();
 const UserProvider = props => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [notifications, setNotifications] = useState([]);
+    const [selectedChat, setSelectedChat] = useState("")
+
+    // Also fetch notifications in here
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,7 +27,6 @@ const UserProvider = props => {
                     }
                 });
                 const userData = await result.json();
-                console.log(userData);
                 setUser(userData);
             } catch (error) {
                 console.log(error);
@@ -38,10 +41,19 @@ const UserProvider = props => {
         setUser(user);
     }
 
+    /*
+    const addNotification = notification => { 
+        setNotifications([...notifications, notification])
+    } */
+
     const value = {
         user,
         updateUser,
-        loading
+        loading,
+        notifications,
+        setNotifications,
+        selectedChat,
+        setSelectedChat
     }
 
     return (

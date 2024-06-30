@@ -8,5 +8,5 @@ export default function PrivateRoute() {
     if (loading) return <p>Loading...</p>
     console.log(user)
 
-    return user ? <Outlet /> : <Navigate to="/signin" />
+    return user ? <Outlet /> : <Navigate to="/" />
 }
