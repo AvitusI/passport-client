@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { SearchIcon } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
@@ -15,39 +16,6 @@ const fetchChats = async () => {
     return data
 } 
 
-/*
-const chats = [
-  {
-    id: 1,
-    username: "Lina Dry",
-    avatar: "/images/baloon.jpg",
-    latestMessage: "Hi",
-    time: "12:35 AM"
-  },
-  {
-    id: 2,
-    username: "Linah Lee",
-    avatar: "/images/honey.jpg",
-    latestMessage: "Hi",
-    time: "12:35 AM"
-  },
-  {
-    id: 3,
-    username: "John Smith",
-    avatar: "/images/milk.jpg",
-    latestMessage: "Hi",
-    time: "12:35 AM"
-  },
-  {
-    id: 4,
-    username: "Kenny Dev",
-    avatar: "/images/baloon.jpg",
-    latestMessage: "Hi",
-    time: "12:35 AM"
-  }
-]
-
-*/
 
 const MyChats = () => {
 

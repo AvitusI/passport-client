@@ -57,7 +57,7 @@ const Chatpage = () => {
 
                           {/* MIDDLE CONTENT START */}
                           {/* Goes into ChatBox component */}
-                        <ChatBox /> 
+                          <ChatBox /> 
                       </div>
 
                         {/* We won't have this last column, but is a good place to practice, xl:block */}

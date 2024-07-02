@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { SearchIcon, Heart, Undo2 } from "lucide-react"
 
 import SingleChat from "./SingleChat"
@@ -62,7 +63,7 @@ const ChatBox = () => {
                               {/* messages end here */}
 
                               {/* Goes into the ChatInput component */}
-                          <ChatInput /> 
+                          <ChatInput selectedChat={selectedChat} /> 
                         </>
                       )}
                       </div>

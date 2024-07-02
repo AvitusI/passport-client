@@ -22,7 +22,7 @@ const SingleChat = () => {
     const chatId = selectedChat._id
 
     const { data, status, error } = useQuery({
-        queryKey: ["messages", chatId],
+        queryKey: ["messages-fetched", chatId],
         queryFn: fetchMessages
     })
 

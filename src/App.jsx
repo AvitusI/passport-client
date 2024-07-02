@@ -20,12 +20,12 @@ const App = () => {
       <BrowserRouter>
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path='/chat' element={<Chatpage />} />
 
           <Route element={<PrivateRoute />}>
               <Route path='/feed' element={<Feed />} />
               <Route path="/post/:id" element={<PostPage />} />
               <Route path='/profile/:userId' element={<Profile />} />
+              <Route path='/chat' element={<Chatpage />} />
           </Route>
         </Routes>
         </BrowserRouter>
