@@ -12,8 +12,10 @@ const Post = ({ post }) => {
               <p className="font-semibold text-2xl">{post.author.username }</p>
           </div>
           <div className="flex flex-col mb-3 border-b-2 p-4">
-              <p className="text-sm mb-1">{post.content}</p>
-                  <img src={post.pic} alt="post" className="object-cover rounded-md w-full h-40" />
+            <p className="text-sm mb-1">{post.content}</p>
+            {post.pic && (
+              < img src={post.pic} alt="post" className="object-cover rounded-md w-full size-40" />
+            )}
           </div>
           <div className="flex justify-between p-4">
               <div><Heart /></div>

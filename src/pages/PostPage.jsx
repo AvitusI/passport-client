@@ -48,7 +48,7 @@ const PostPage = () => {
                     <div className="mt:4 sm:mt-6">
                                 <Post post={post} />
                                 <div className="mt-4 ml-4">
-                                    <CommentCard />
+                                    <CommentCard postId={id}/>
                                 </div>
                                 <div className="mt-4">
                                     {post.comments.map((comment) => (

@@ -1,6 +1,50 @@
+import { useMutation } from "@tanstack/react-query"
+import { useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+import axios from "axios"
 import { EyeIcon } from "lucide-react"
+import { Button } from "@nextui-org/react"
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().required().min(5),
+  username: yup.string().required()
+})
+
+const signUp = async (sentData) => {
+  const response = await axios.post('http://localhost:5000/api/users', sentData, {withCredentials: true})
+  return response.data;
+}
 
 const SignUpComponent = () => {
+
+  const {
+    register,
+    handleSubmit,
+    formState: {errors, isSubmitting}
+  } = useForm({
+    mode: "onBlur",
+    resolver: yupResolver(schema)
+  })
+
+  const navigate = useNavigate()
+
+  const { mutate } = useMutation({
+    mutationFn: signUp,
+    onSuccess: () => {
+      navigate('/activateAccount')
+    },
+    onError: (error) => {
+      console.log(error.message)
+    }
+  })
+
+  const onSubmit = (data) => {
+    mutate(data)
+  }
+
   return (
     <section className='w-full'>
           {/* Signup container */}
@@ -10,30 +54,62 @@ const SignUpComponent = () => {
                   <h2 className="font-bold text-2xl text-orange-500 text-center">SignUp</h2>
                   <p className="text-sm mt-4 text-orange-500">New to the platform?</p>
 
-                  <form action="" className="flex flex-col  gap-4 w-full">
+              <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="flex flex-col  gap-4 w-full"
+                >
                       <input
-                          className="p-2 mt-8 rounded-xl border focus:border-orange-500 focus:border-2 focus:outline-none w-full"
+                        className={`p-2 mt-8 rounded-xl border-2 outline-none w-full ${
+                         errors.username ? "text-red-500 border-red-500" : "text-white  border-orange-500"
+                          }`}
                           type="text"
                           name="username"
-                          placeholder="Username" />
+                          placeholder="Username"
+                          {...register("username")}
+                      />
+                      {errors.username && (
+                        <div className="text-red-500 text-sm">
+                            {errors.username.message}
+                        </div>
+                      )}
                       <input
-                          className="p-2 rounded-xl border focus:border-orange-500 focus:border-2 focus:outline-none w-full"
+                          className={`p-2 rounded-xl border-2 outline-none w-full ${
+                            errors.email ? "text-red-500 border-red-500" : "text-white border-orange-500"
+                          }`}
                           type="text"
                           name="email"
-                          placeholder="Email" />
+                          placeholder="Email"
+                          {...register("email")}
+                      />
+                      {errors.email && (
+                        <div className="text-red-500 text-sm">
+                            {errors.email.message}
+                        </div>
+                      )}
                       <div className='relative'>
                         <input
-                            className="p-2 rounded-xl focus:outline-none border focus:border-orange-500 focus:border-2 w-full"
+                            className={`p-2 rounded-xl outline-none border-2 w-full ${
+                                errors.password ? "text-red-500 border-red-500" : "text-white border-orange-500"
+                            }`}
                             type="password"
                             name="password"
-                              placeholder="Password" />
+                            placeholder="Password"
+                            {...register("password")}
+                          />
                             <EyeIcon className="absolute right-3 top-1/2 -translate-y-1/2" />
                         </div>
-                      <button
-                        className="bg-orange-500 rounded-xl py-2 hover:scale-105 duration-300"
+                        {errors.password && (
+                          <div className="text-red-500 text-sm">
+                            {errors.password.message}
+                          </div>
+                        )}
+                      <Button
+                          className="bg-orange-500 rounded-xl py-2 hover:scale-105 duration-300"
+                          isLoading={isSubmitting}
+                          type="submit"
                       >
                           SignUp
-                      </button>
+                      </Button>
                   </form>
 
                   

@@ -1,6 +1,6 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import axios from "axios"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useMutation } from "@tanstack/react-query"
 import { Spinner, Image, Button, Tabs, Tab } from "@nextui-org/react"
 import { NotebookPen, MessageSquareMore, Clapperboard} from "lucide-react"
 
@@ -17,14 +17,32 @@ const fetchUser = async ({ queryKey }) => {
     return response.data
 }
 
+const messageUser = async (sentData) => {
+        const { data } = await axios.post(`http://localhost:5000/api/chat`, sentData, { withCredentials: true });
+        return data
+}
+
+
 const Profile = () => {
 
     const { userId } = useParams();
-    const { user } = useUser()
+    const navigate  = useNavigate();
+    const { user, setSelectedChat } = useUser();
 
     const { data , status, error } = useQuery({
         queryKey: ["user", userId],
         queryFn: fetchUser
+    })
+
+    const { mutate } = useMutation({
+        mutationFn: messageUser,
+        onSuccess: (data) => {
+            setSelectedChat(data[0])
+            navigate('/chat')
+        },
+        onError: (error) => {
+            console.log(error)
+        }
     })
 
     return status === 'pending' ? (
@@ -64,7 +82,7 @@ const Profile = () => {
                             {!(userId === user._id) &&
                                 <div className="flex justify-between mt-6 gap-2">
                                     <Button className="text-white bg-orange-500">Follow</Button>
-                                    <Button className="text-white bg-orange-500">Message</Button>
+                                    <Button onClick={() => mutate({ userId })} className="text-white bg-orange-500">Message</Button>
                                 </div>
                             }
                             <div className="flex w-full flex-col mt-10">

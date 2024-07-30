@@ -43,7 +43,7 @@ const MyChats = () => {
                                           <div className="flex-shrink-0">
                                               <img
                                                   className="h-12 w-12 rounded-full"
-                                                  src="/images/honey.jpg"
+                                                  src={user.avatar}
                                               />
                                           </div>
                                           <div className="flex-1 min-w-0">

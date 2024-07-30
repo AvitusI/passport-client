@@ -6,6 +6,10 @@ import {
     useEffect,
     useState
 } from "react";
+//import { useQuery } from "@tanstack/react-query";
+//import axios from "axios";
+
+import { groupByUser, transformNotification } from "../utils/messageNotification";
 
 const UserContext = createContext();
 
@@ -13,11 +17,18 @@ const UserProvider = props => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [notifications, setNotifications] = useState([]);
-    const [selectedChat, setSelectedChat] = useState("")
+    const [selectedChat, setSelectedChat] = useState("");
+    const [messageNotification, setMessageNotification] = useState([]);
 
     // Also fetch notifications in here
 
     useEffect(() => {
+        /*
+        const msgNotificationFn = async ({ queryKey }) => {
+            const [userId,] = queryKey
+            const { data } = await axios.get(`http://localhost:5000/api/messagenotify/${userId}`, { withCredentials: true })
+            return data;
+        } */
         const fetchData = async () => {
             try {
                 const result = await fetch("http://localhost:5000/api/auth/status", {
@@ -28,6 +39,26 @@ const UserProvider = props => {
                 });
                 const userData = await result.json();
                 setUser(userData);
+
+
+                /*
+               const { data } = useQuery({
+                    queryKey: ["messageNotification", userId],
+                    queryFn: msgNotificationFn
+                }) */
+
+                
+                const msgNotification = await fetch(`http://localhost:5000/api/messagenotify/${userData._id}`, {
+                    credentials: "include",
+                    headers: {
+                        accept: 'application/json'
+                    }
+                });
+                const msgNotificationData = await msgNotification.json();
+                const groupedNotification = groupByUser(msgNotificationData);
+                const transformedNotifications = transformNotification(groupedNotification)
+                setMessageNotification(transformedNotifications)
+
             } catch (error) {
                 console.log(error);
             } finally {
@@ -35,7 +66,7 @@ const UserProvider = props => {
             }
         };
         fetchData();
-    }, [])
+    }, [selectedChat, setSelectedChat])
 
     const updateUser = user => {
         setUser(user);
@@ -53,7 +84,9 @@ const UserProvider = props => {
         notifications,
         setNotifications,
         selectedChat,
-        setSelectedChat
+        setSelectedChat,
+        messageNotification,
+        setMessageNotification
     }
 
     return (

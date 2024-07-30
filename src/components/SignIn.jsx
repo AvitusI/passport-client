@@ -94,7 +94,7 @@ const SignInComponent = () => {
                         )}
                       <Button
                         className="bg-orange-500 rounded-xl py-2 hover:scale-105 duration-300"
-                        isLoading={isSubmitting}
+                        isDisabled={isSubmitting}
                         type="submit"
                       >
                           Login

@@ -46,7 +46,7 @@ const profiles = [
 ]
 
 const fetchUserFeed = async ({ pageParam }) => {
-    await new Promise((resolve) => setTimeout(resolve, 3000))
+    //await new Promise((resolve) => setTimeout(resolve, 3000))
     const response = await axios.get(`http://localhost:5000/api/feed?page=${pageParam}`, { withCredentials: true })
 
     return response.data
