@@ -16,7 +16,9 @@ import Activation from './pages/Activation';
 import Activated from './pages/Activated';
 import PostUpload from './pages/PostUpload';
 import Explore from './pages/Explore';
-import Explore2 from './pages/Explore2';
+import Test from './pages/Test';
+import EditPost from './pages/EditPost';
+import EditProfile from './pages/EditProfile';
 
 const App = () => {
   return (
@@ -27,7 +29,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path='/activateAccount' element={<Activation />} />
             <Route path='/accountActivate' element={<Activated />} />
-            <Route path='/explore2' element={<Explore2 />} />
+            <Route path='/test' element={<Test />} />
 
           <Route element={<PrivateRoute />}>
               <Route path='/feed' element={<Feed />} />
@@ -36,6 +38,8 @@ const App = () => {
               <Route path='/chat' element={<Chatpage />} />
               <Route path='/post' element={<PostUpload />} />
               <Route path='/explore' element={<Explore />} />
+              <Route path='/edit/post/:postId' element={<EditPost />} />
+              <Route path='/edit/user/:userId' element={<EditProfile />} />
           </Route>
         </Routes>
         </BrowserRouter>

@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate, Link } from "react-router-dom"
 import axios from "axios"
 import { useQuery, useMutation } from "@tanstack/react-query"
 import { Spinner, Image, Button, Tabs, Tab } from "@nextui-org/react"
@@ -10,6 +10,7 @@ import { useUser } from "../context/UserContext"
 import ProfilePosts from "../components/ProfilePosts"
 import ProfileComments from "../components/ProfileComments"
 import ProfileMedia from "../components/ProfileMedia"
+import CustomButton from "../components/CustomButton"
 
 const fetchUser = async ({ queryKey }) => {
     const [, userId] = queryKey
@@ -79,12 +80,12 @@ const Profile = () => {
                                 </div>
                     </div>
 
-                            {!(userId === user._id) &&
+                            {!(userId === user._id) ? (
                                 <div className="flex justify-between mt-6 gap-2">
-                                    <Button className="text-white bg-orange-500">Follow</Button>
+                                    <CustomButton data={data} />
                                     <Button onClick={() => mutate({ userId })} className="text-white bg-orange-500">Message</Button>
                                 </div>
-                            }
+                            ) : (<Link to={`/edit/user/${user._id}`}><Button className="text-white bg-orange-500 mt-3 w-[100px]">Edit Profile</Button></Link>)}
                             <div className="flex w-full flex-col mt-10">
                                 <Tabs radius="full" color="warning">
                                     <Tab

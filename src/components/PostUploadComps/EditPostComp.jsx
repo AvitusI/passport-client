@@ -1,8 +1,9 @@
-import { useState } from "react"
+/* eslint-disable react/prop-types */
+import  { useState } from "react"
 import { useForm, Controller } from "react-hook-form"
 import axios from "axios"
-import { useMutation } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
+import { useMutation } from "@tanstack/react-query"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 
@@ -13,10 +14,10 @@ const schema = yup.object().shape({
   post: yup.string().required()
 })
 
-const PostEdit = () => {
+const EditPostComp = ({ post }) => {
 
   const [files, setFiles] = useState(false)
-
+  
   const navigate = useNavigate()
 
   const {
@@ -27,7 +28,11 @@ const PostEdit = () => {
     formState: {errors, isSubmitting}
   } = useForm({
     mode: "onBlur",
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    defaultValues: {
+      post: post?.content,
+      image: post?.pic
+    } 
   })
 
   const handleFileUpload = async () => {
@@ -47,8 +52,8 @@ const PostEdit = () => {
   }
 
   const sendPost = async (sentData) => {
-    const { data } = await axios.post(
-      "http://localhost:5000/api/posts",
+    const { data } = await axios.put(
+      `http://localhost:5000/api/posts/${post._id}`,
       sentData,
       { withCredentials: true }
     )
@@ -58,7 +63,7 @@ const PostEdit = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: sendPost,
     onSuccess: () => {
-      navigate("/feed")
+      navigate(`/post/${post._id}`)
     },
     onError: (error) => {
       console.log(error)
@@ -75,9 +80,20 @@ const PostEdit = () => {
     mutate({ content: values.post, pic: values.image })
   }
 
+
   return (
-    <div className="flex flex-col gap-2 p-2 sm:p-4">
-      <h1 className="text-center text-2xl mb-4">Share Your Thoughts</h1>
+      <>
+    <div className="h-screen w-screen p-4 sm:p-6 flex gap-3">
+      <div
+        className="hidden sm:w-1/3 sm:flex"
+      >
+              
+          </div>
+      <div
+        className="w-full sm:w-1/3"
+      >
+             <div className="flex flex-col gap-2 p-2 sm:p-4">
+      <h1 className="text-center text-2xl mb-4">Edit Your Post</h1>
       <form onSubmit={handleSubmit(doSubmit)}>
         <div
           className="flex flex-col p-2 gap-4"
@@ -117,8 +133,16 @@ const PostEdit = () => {
           </div>
         </div>
       </form>
-    </div>
+    </div> 
+  </div>
+  <div
+        className="hidden sm:w-1/3 sm:flex"
+      >
+              
+          </div>
+      </div >
+  </>
   )
 }
 
-export default PostEdit
+export default EditPostComp

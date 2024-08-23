@@ -1,4 +1,4 @@
-import PostEdit from "../components/PostUploadComps.jsx/PostEdit"
+import PostEdit from "../components/PostUploadComps/PostEdit"
 
 const PostUpload = () => {
   return (
