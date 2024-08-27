@@ -4,6 +4,9 @@ import {
   Route
 } from 'react-router-dom'
 import { NextUIProvider } from '@nextui-org/react';
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css"
 
 import { UserProvider } from './context/UserContext'
 import Home from './pages/Home'
@@ -19,6 +22,8 @@ import Explore from './pages/Explore';
 import Test from './pages/Test';
 import EditPost from './pages/EditPost';
 import EditProfile from './pages/EditProfile';
+import RequestResetPassword from './pages/RequestResetPassword';
+import ResetPassword from './pages/ResetPassword';
 
 const App = () => {
   return (
@@ -30,6 +35,8 @@ const App = () => {
             <Route path='/activateAccount' element={<Activation />} />
             <Route path='/accountActivate' element={<Activated />} />
             <Route path='/test' element={<Test />} />
+            <Route path='/requestResetPassword' element={<RequestResetPassword />} />
+            <Route path='/resetPassword' element={<ResetPassword />} />
 
           <Route element={<PrivateRoute />}>
               <Route path='/feed' element={<Feed />} />
@@ -43,6 +50,7 @@ const App = () => {
           </Route>
         </Routes>
         </BrowserRouter>
+        <ToastContainer />
         </NextUIProvider>
     </UserProvider>
   )

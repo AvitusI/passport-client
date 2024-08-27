@@ -7,7 +7,6 @@ import { Avatar, Spinner } from "@nextui-org/react"
 
 const fetchProfileComments = async ({ queryKey, pageParam }) => {
   const [, userId] = queryKey
-  await new Promise((resolve) => setTimeout(resolve, 3000))
   const response = await axios.get(`http://localhost:5000/api/comments/${userId}?page=${pageParam}`, { withCredentials: true })
   return response.data
 }

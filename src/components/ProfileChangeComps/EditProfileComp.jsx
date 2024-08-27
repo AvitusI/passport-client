@@ -78,8 +78,9 @@ export const EditProfileComp = ({ user }) => {
         if (files.length > 0) {
             const newUrl = await handleFileUpload(files)
             if (newUrl) {
-                values.image = newUrl
+                values.avatar = newUrl
             }
+            console.log(values.avatar)
         }
         mutate({ username: values.username, avatar: values.avatar, bio: values.bio })
     }

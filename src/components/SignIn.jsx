@@ -4,8 +4,9 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 import axios from "axios"
-import { Eye } from 'lucide-react'
 import { Button } from '@nextui-org/react'
+
+import { toast } from "react-toastify"
 
 import { useUser } from "../context/UserContext"
 import { queryClient } from "../main"
@@ -42,8 +43,8 @@ const SignInComponent = () => {
       queryClient.invalidateQueries(['items'], { refetchActive: true })
       navigate('/feed')
     },
-    onError: (error) => {
-      console.log(error)
+    onError: () => {
+      toast.error("Incorrect credentials")
     }
   })
 
@@ -85,7 +86,6 @@ const SignInComponent = () => {
                             placeholder="******"
                             {...register("password")}
                           />
-                          <Eye className="absolute right-3 top-1/2 -translate-y-1/2" />
                         </div>
                         {errors.password && (
                         <div className='mt-1 text-red-500 text-sm'>

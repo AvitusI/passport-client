@@ -11,7 +11,7 @@ const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
 
   const { user, notifications, messageNotification } = useUser()
-  console.log(messageNotification)
+  console.log(notifications)
   const navigate = useNavigate()
 
   const toggleMobileDrawer = () => { 
@@ -20,6 +20,23 @@ const Navbar = () => {
 
   const handleClick = () => {
     navigate('/chat')
+  }
+
+  const handleRedirect = (notification) => {
+    switch (notification.type) {
+      case "FollowNotification":
+        navigate(`/profile/${notification.followerId._id}`)
+        break;
+      case "LikePostNotification":
+        navigate(`/post/${notification.postId}`)
+        break;
+      case "LikeCommentNotification":
+        navigate(`/post/${notification.commentId.postId}`)
+        break;
+      case "CommentNotification":
+        navigate(`/post/${notification.postId}`)
+        break;
+    }
   }
 
   return (
@@ -46,7 +63,16 @@ const Navbar = () => {
                     <PopoverContent>
                       {notifications?.length ? (
                           notifications.map((notification) => (
-                            <div key={notification._id} className="flex items-center justify-between p-2 border-b border-gray-200">
+                            <div
+                              key={notification._id}
+                              onClick={() => handleRedirect(notification)}
+                              className="flex items-center p-2 border-b border-gray-200 gap-2 cursor-pointer hover:bg-slate-300 rounded-md truncate"
+                            >
+                              <Avatar
+                                src={notification?.followerId?.avatar || notification?.likerId?.avatar || notification?.commenterId?.avatar}
+                                alt='avatar'
+                                className='w-6 h-6 mr-2'
+                              />
                               <p className="text-sm">{notification.message}</p>
                             </div>
                           ))
@@ -72,7 +98,11 @@ const Navbar = () => {
                     <PopoverContent>
                       {messageNotification?.length ? (
                           messageNotification.map((notification) => (
-                            <div key={notification._id} onClick={handleClick} className="flex items-center justify-between p-2 border-b border-gray-200 gap-2 cursor-pointer hover:bg-slate-300 rounded-md">
+                            <div
+                              key={notification._id}
+                              onClick={handleClick}
+                              className="flex items-center justify-between p-2 border-b border-gray-200 gap-2 cursor-pointer hover:bg-slate-300 rounded-md"
+                            >
                               <Avatar src={notification.avatar} alt='avatar' className='w-6 h-6' />
                               <p className="text-sm">{notification?.message}</p>
                             </div>

@@ -119,7 +119,7 @@ const Profile = () => {
                                             </div>
                                         }
                                     >
-                                        <ProfileMedia />
+                                        <ProfileMedia userId={userId} />
                                     </Tab>
                                 </Tabs>
                             </div>

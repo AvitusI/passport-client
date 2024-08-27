@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useInView } from "react-intersection-observer"
 import { Spinner } from "@nextui-org/react"
@@ -52,16 +52,9 @@ const fetchUserFeed = async ({ pageParam }) => {
     return response.data
 }
 
-const fetchNotifications = async ({ queryKey }) => { 
-    const [, userId] = queryKey
-    const response = await axios.get(`http://localhost:5000/api/notifications/${userId}`, { withCredentials: true })
-
-    return response.data
-}
-
 const Feed = () => {
 
-    const { user, setNotifications } = useUser()
+    const { user } = useUser()
     const { ref, inView } = useInView()
 
     const { data, error, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
@@ -70,11 +63,6 @@ const Feed = () => {
         initialPageParam: 0,
         getNextPageParam: (lastPage) => lastPage.hasNextPage ? lastPage.page + 1 : undefined
     })
-
-    const userId = user._id
-    const { data: notifications } = useQuery({ queryKey: ['notifications', userId], queryFn: fetchNotifications })
-
-    setNotifications(notifications)
 
     useEffect(() => { 
         if (inView) {

@@ -6,8 +6,6 @@ import {
     useEffect,
     useState
 } from "react";
-//import { useQuery } from "@tanstack/react-query";
-//import axios from "axios";
 
 import { groupByUser, transformNotification } from "../utils/messageNotification";
 
@@ -23,12 +21,6 @@ const UserProvider = props => {
     // Also fetch notifications in here
 
     useEffect(() => {
-        /*
-        const msgNotificationFn = async ({ queryKey }) => {
-            const [userId,] = queryKey
-            const { data } = await axios.get(`http://localhost:5000/api/messagenotify/${userId}`, { withCredentials: true })
-            return data;
-        } */
         const fetchData = async () => {
             try {
                 const result = await fetch("http://localhost:5000/api/auth/status", {
@@ -40,14 +32,6 @@ const UserProvider = props => {
                 const userData = await result.json();
                 setUser(userData);
 
-
-                /*
-               const { data } = useQuery({
-                    queryKey: ["messageNotification", userId],
-                    queryFn: msgNotificationFn
-                }) */
-
-                
                 const msgNotification = await fetch(`http://localhost:5000/api/messagenotify/${userData._id}`, {
                     credentials: "include",
                     headers: {
@@ -58,6 +42,15 @@ const UserProvider = props => {
                 const groupedNotification = groupByUser(msgNotificationData);
                 const transformedNotifications = transformNotification(groupedNotification)
                 setMessageNotification(transformedNotifications)
+
+                const allNotifications = await fetch(`http://localhost:5000/api/notifications/${userData._id}`, {
+                    credentials: "include",
+                    headers: {
+                        accept: 'application/json',
+                    }
+                });
+                const allNotificationsData = await allNotifications.json()
+                setNotifications(allNotificationsData);
 
             } catch (error) {
                 console.log(error);
@@ -71,11 +64,6 @@ const UserProvider = props => {
     const updateUser = user => {
         setUser(user);
     }
-
-    /*
-    const addNotification = notification => { 
-        setNotifications([...notifications, notification])
-    } */
 
     const value = {
         user,
