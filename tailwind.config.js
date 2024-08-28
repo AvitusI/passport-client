@@ -14,6 +14,9 @@ export default {
       colors: {
         gold: "#ffd700",
       },
+      gridTemplateColumns: {
+        custom: "50px 1fr",
+      },
     },
   },
   darkMode: "class",

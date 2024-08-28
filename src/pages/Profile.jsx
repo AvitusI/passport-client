@@ -69,7 +69,7 @@ const Profile = () => {
                      {/* Profile section */}
                     <div className="grid grid-cols-2 gap-2 sm:gap-4 text-white">
                                 <div className="flex p-2 sm:p-4 justify-center items-center">
-                                    <Image src={data.avatar} alt="avatar" className="rounded-full" />
+                                    <Image src={data.avatar} alt="avatar" className="size-24 rounded-full" />
                                 </div>
                                 <div className="flex flex-col p-2 sm:p-4 gap-2">
                                     <p className="font-bold text-lg mb-2">{data.username}</p>

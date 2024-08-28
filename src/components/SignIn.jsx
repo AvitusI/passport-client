@@ -36,7 +36,7 @@ const SignInComponent = () => {
     return response.data
   }
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
       updateUser(data)
@@ -94,7 +94,7 @@ const SignInComponent = () => {
                         )}
                       <Button
                         className="bg-orange-500 rounded-xl py-2 hover:scale-105 duration-300"
-                        isDisabled={isSubmitting}
+                        isLoading={isSubmitting || isPending}
                         type="submit"
                       >
                           Login

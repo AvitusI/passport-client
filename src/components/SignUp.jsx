@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import axios from "axios"
-import { EyeIcon } from "lucide-react"
+import { toast } from "react-toastify"
 import { Button } from "@nextui-org/react"
 
 const schema = yup.object().shape({
@@ -31,13 +31,13 @@ const SignUpComponent = () => {
 
   const navigate = useNavigate()
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: signUp,
     onSuccess: () => {
       navigate('/activateAccount')
     },
     onError: (error) => {
-      console.log(error.message)
+      toast.error(error.message);
     }
   })
 
@@ -96,7 +96,6 @@ const SignUpComponent = () => {
                             placeholder="Password"
                             {...register("password")}
                           />
-                            <EyeIcon className="absolute right-3 top-1/2 -translate-y-1/2" />
                         </div>
                         {errors.password && (
                           <div className="text-red-500 text-sm">
@@ -105,7 +104,7 @@ const SignUpComponent = () => {
                         )}
                       <Button
                           className="bg-orange-500 rounded-xl py-2 hover:scale-105 duration-300"
-                          isLoading={isSubmitting}
+                          isDisabled={isSubmitting || isPending}
                           type="submit"
                       >
                           SignUp

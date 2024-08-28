@@ -10,6 +10,7 @@ import { Image } from "@nextui-org/react"
 import { useUser } from "../context/UserContext"
 import SidebarCard from "./SidebarCard"
 import Logout from "./Logout"
+import { SearchModal } from "./SearchComps/SearchModal"
 
 const routes = [
     {
@@ -48,8 +49,11 @@ const Sidebar = () => {
     return (
         <div className="p-3 flex flex-col justify-between">
             <div className="flex flex-col mb-6 lg:mb-12">
-                <div className="flex p-4 items-center justify-center mb-4 sm:mb-6">
+                <div className="flex p-4 items-center justify-center mb-2">
                     <Image src={user.avatar} alt="avatar" className="h-24 w-24" radius="lg"  />
+                </div>
+                <div className="flex justify-center items-center mb-2">
+                    <SearchModal />
                 </div>
                 {routes.map((route) => (
                     <SidebarCard
