@@ -50,6 +50,7 @@ const PostPage = () => {
                                 <div className="mt-4 ml-4">
                                     <CommentCard postId={id}/>
                                 </div>
+            
                                 <div className="mt-4">
                                     {post.comments.map((comment) => (
                                         <Comment key={comment._id} comment={comment} />

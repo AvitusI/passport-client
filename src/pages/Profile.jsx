@@ -1,7 +1,18 @@
 import { useParams, useNavigate, Link } from "react-router-dom"
 import axios from "axios"
 import { useQuery, useMutation } from "@tanstack/react-query"
-import { Spinner, Image, Button, Tabs, Tab } from "@nextui-org/react"
+import {
+    Spinner,
+    Button,
+    Tabs,
+    Tab,
+    Avatar,
+    useDisclosure,
+    AvatarGroup,
+    Modal,
+    ModalContent,
+    ModalBody
+} from "@nextui-org/react"
 import { NotebookPen, MessageSquareMore, Clapperboard} from "lucide-react"
 
 import Navbar from "../components/Navbar"
@@ -11,6 +22,7 @@ import ProfilePosts from "../components/ProfilePosts"
 import ProfileComments from "../components/ProfileComments"
 import ProfileMedia from "../components/ProfileMedia"
 import CustomButton from "../components/CustomButton"
+import { getCommonFollowers, getFollowersByProfileSummary } from "../utils/followerSummary"
 
 const fetchUser = async ({ queryKey }) => {
     const [, userId] = queryKey
@@ -26,6 +38,8 @@ const messageUser = async (sentData) => {
 
 const Profile = () => {
 
+    const { isOpen, onOpen, onOpenChange} = useDisclosure()
+
     const { userId } = useParams();
     const navigate  = useNavigate();
     const { user, setSelectedChat } = useUser();
@@ -34,6 +48,10 @@ const Profile = () => {
         queryKey: ["user", userId],
         queryFn: fetchUser
     })
+
+    const commonFollowers = getCommonFollowers(user?.followers, data?.followers)
+
+    console.log(`data: ${getFollowersByProfileSummary(user, data)}`);
 
     const { mutate } = useMutation({
         mutationFn: messageUser,
@@ -67,27 +85,103 @@ const Profile = () => {
                 {/* Profile column */}
                 <div className="w-full lg:w-1/3 p-6 flex flex-col">
                      {/* Profile section */}
-                    <div className="grid grid-cols-2 gap-2 sm:gap-4 text-white">
-                                <div className="flex p-2 sm:p-4 justify-center items-center">
-                                    <Image src={data.avatar} alt="avatar" className="size-24 rounded-full" />
-                                </div>
-                                <div className="flex flex-col p-2 sm:p-4 gap-2">
-                                    <p className="font-bold text-lg mb-2">{data.username}</p>
-                                    <div className="flex flex-col justify-start">
-                                        <p className="font-bold text-2xl">{`${data.followers.length}`}</p>
-                                        <p className="font-bold text-2xl tracking-wide">{`${data.followers.length === 1 ? "follower" : "followers"}`}</p>
-                                    </div>
-                                </div>
-                    </div>
 
-                            {!(userId === user._id) ? (
-                                <div className="flex justify-between mt-6 gap-2">
-                                    <CustomButton data={data} />
-                                    <Button onClick={() => mutate({ userId })} className="text-white bg-orange-500">Message</Button>
+                    <section
+                        className="max-w-[400px] p-2 flex flex-col gap-3 sm:gap-6 rounded-md mb-4 sm:pr-10"
+                     >
+                        <div className="flex justify-between">
+                            <div className="flex gap-5">
+                                <Avatar size="lg" src={data.avatar} />
+                                <div className="flex flex-col gap-1 items-start justify-center">
+                                    <h4 className="text-lg font-semibold leading-none text-default-600">{data.username}</h4>
                                 </div>
-                            ) : (<Link to={`/edit/user/${user._id}`}><Button className="text-white bg-orange-500 mt-3 w-[100px]">Edit Profile</Button></Link>)}
-                            <div className="flex w-full flex-col mt-10">
-                                <Tabs radius="full" color="warning">
+                            </div>
+                        </div>
+
+                        <div>
+                            <p className={`text-sm text-default-400 ${data.bio ? "block" : "hidden"}`}>
+                                {data.bio} <span className="italic underline text-default-500">more</span>
+                            </p>
+                        </div>
+
+                        <div className="flex gap-4">
+                            <div className="flex gap-1 items-center">
+                                <p className="font-semibold text-white text-xl sm:text-2xl">4</p>
+                                <p className="text-default-500 text-xs">Following</p>
+                            </div>
+                            <div className="flex gap-1 items-center">
+                                <p className="font-semibold text-white text-xl sm:text-2xl">{data.followers.length}</p>
+                                <p className="text-default-500 text-xs">{`${data.followers.length === 1 ? "Follower" : "Followers"}`}</p>
+                            </div>
+                        </div>
+
+                        <div className="p-0">
+                            <div
+                                className="text-default-500 flex gap-2 flex-1 items-center cursor-pointer"
+                                onClick={onOpen}
+                            >
+                                <span className={`mr-2 ${commonFollowers.length > 0 ? "block" : "hidden"}`}>
+                                    <AvatarGroup>
+                                        {commonFollowers.slice(0, 3).map((user) => (
+                                            <Avatar size="sm" key={user.id} src={user.avatar} alt={user.username} />
+                                        ))}
+                                    </AvatarGroup>
+                                </span>
+                                <span className="text-xs">{getFollowersByProfileSummary(user, data)}</span>
+                            </div>
+                            <Modal
+                                isOpen={isOpen}
+                                onOpenChange={onOpenChange}
+                                placement="center"
+                            >
+                                <ModalContent>
+                                    <ModalBody>
+                                        <div className="flex flex-col h-auto max-h-[400px] overflow-scroll container">
+                                            <div className="p-4">
+                                                {commonFollowers.map((user) => (
+                                                    <div key={user.id}>
+                                                        <div className="relative rounded-lg px-2 py-2 flex items-center space-x-3 mb-3">
+                                                            <div className="flex-shrink-0">
+                                                                <Avatar src={user.avatar} alt="avatar" />
+                                                            </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className="flex items-center justify-between flex-shrink-0">
+                                                                    <p className="text-black">{user.username}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex items-center justify-between">
+                                                                <Button size="sm" radius="full" className="bg-black text-white uppercase">Profile</Button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                     </ModalBody>
+                                </ModalContent>
+                            </Modal>
+                        </div>
+                        {!(userId === user._id) ? (
+                            <div
+                                className="flex justify-between items-center"
+                            >
+                                        <CustomButton data={data} />
+                                        <Button
+                                            size="sm"
+                                            radius="full"
+                                            onClick={() => mutate({ userId })}
+                                            className="text-white bg-orange-500"
+                                        >
+                                            Message
+                                        </Button>
+                                </div>
+                                
+                            ) : (<Link to={`/edit/user/${user._id}`}><Button radius="full" size="sm" className="text-white bg-orange-500 mt-3 w-[100px]">Edit Profile</Button></Link>)}
+
+                    </section>
+
+
+                    <Tabs radius="full" color="warning">
                                     <Tab
                                         key="posts"
                                         title={
@@ -121,13 +215,13 @@ const Profile = () => {
                                     >
                                         <ProfileMedia userId={userId} />
                                     </Tab>
-                                </Tabs>
-                            </div>
+                    </Tabs>
+                            
                 </div>
                 {/*  blank column in large devices*/}
                 <div className="w-1/3 hidden lg:block">            
 
-                </div>
+            </div>
             </div>
       </>
   )

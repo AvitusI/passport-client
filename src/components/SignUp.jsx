@@ -6,6 +6,7 @@ import * as yup from "yup"
 import axios from "axios"
 import { toast } from "react-toastify"
 import { Button } from "@nextui-org/react"
+import { SpellCheck2 } from "lucide-react"
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -46,68 +47,65 @@ const SignUpComponent = () => {
   }
 
   return (
-    <section className='w-full'>
-          {/* Signup container */}
-          <div className="flex max-w-3xl items-center">
+    <div className='w-full'>
+          {/* login container */}
+          <div className="flex items-center">
               {/* login form */}
-              <div className="px-1">
-                  <h2 className="font-bold text-2xl text-orange-500 text-center">SignUp</h2>
-                  <p className="text-sm mt-4 text-orange-500">New to the platform?</p>
+            <div className="flex flex-col items-center justify-center">
+          
+                  <div className="w-[300px] max-w-[600px] flex justify-center items-center">
+                       <SpellCheck2 className="text-orange-500" />
+                  </div>
 
-              <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  className="flex flex-col  gap-4 w-full"
-                >
-                      <input
-                        className={`p-2 mt-8 rounded-xl border-2 outline-none w-full ${
-                         errors.username ? "text-red-500 border-red-500" : "text-white  border-orange-500"
+                  <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col  gap-4 w-full">
+                        <input
+                          className={`p-2 mt-8 rounded-xl border-2 outline-none w-full ${
+                            errors.email ? "text-red-500 border-red-500" : "text-white border-orange-500"
                           }`}
                           type="text"
                           name="username"
                           placeholder="Username"
                           {...register("username")}
-                      />
-                      {errors.username && (
-                        <div className="text-red-500 text-sm">
-                            {errors.username.message}
-                        </div>
-                      )}
+                        />
+                          {errors.username && (
+                            <div className='mt-1 text-red-500 text-sm'>
+                              {errors.username.message}
+                            </div>
+                          )}
                       <input
                           className={`p-2 rounded-xl border-2 outline-none w-full ${
                             errors.email ? "text-red-500 border-red-500" : "text-white border-orange-500"
                           }`}
-                          type="text"
+                          type="email"
                           name="email"
                           placeholder="Email"
                           {...register("email")}
-                      />
-                      {errors.email && (
-                        <div className="text-red-500 text-sm">
-                            {errors.email.message}
-                        </div>
-                      )}
-                      <div className='relative'>
+                        />
+                          {errors.email && (
+                            <div className='mt-1 text-red-400 text-sm'>
+                              {errors.email.message}
+                            </div>
+                          )}
                         <input
-                            className={`p-2 rounded-xl outline-none border-2 w-full ${
+                             className={`p-2 rounded-xl focus:outline-none border-2 w-full ${
                                 errors.password ? "text-red-500 border-red-500" : "text-white border-orange-500"
-                            }`}
+                              }`}
                             type="password"
                             name="password"
-                            placeholder="Password"
+                            placeholder="******"
                             {...register("password")}
                           />
-                        </div>
                         {errors.password && (
-                          <div className="text-red-500 text-sm">
-                            {errors.password.message}
-                          </div>
+                        <div className='mt-1 text-red-500 text-sm'>
+                          {errors.password.message}
+                        </div>
                         )}
                       <Button
-                          className="bg-orange-500 rounded-xl py-2 hover:scale-105 duration-300"
-                          isDisabled={isSubmitting || isPending}
-                          type="submit"
+                        className="bg-orange-500 rounded-xl py-2 hover:scale-105 duration-300 mt-4"
+                        isLoading={isSubmitting || isPending}
+                        type="submit"
                       >
-                          SignUp
+                          Signup
                       </Button>
                   </form>
 
@@ -116,7 +114,7 @@ const SignUpComponent = () => {
               </div>
 
             
-    </section>
+    </div>
   )
 }
 export default SignUpComponent

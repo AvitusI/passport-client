@@ -36,7 +36,10 @@ const Explore = () => {
                     <Sidebar />
             </div>
             {/* Users section */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-5 p-3 sm:p-4">
+            <div className="flex flex-col gap-2 w-[400px] pt-6 sm:pt-10">
+              <div className="mb-4 sm:mb-6">
+                <h1 className="text-2xl text-center">All Users</h1>
+              </div>
               {data.map((user) => <UserCard key={user._id} user={user} />)}
             </div>
           </div>

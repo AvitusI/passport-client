@@ -45,10 +45,12 @@ const CustomButton = ({ data }) => {
   return (
       <Button
           className="text-white bg-orange-500"
+          radius="full"
+          size="sm"
           isDisabled={isPending}
           onClick={followAction}
       >
-          {isFollowed ? "Unfollow" : "Follow"}
+          {isFollowed ? "Following" : "Follow"}
     </Button>
   )
 }

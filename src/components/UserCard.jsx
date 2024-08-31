@@ -1,33 +1,27 @@
 /* eslint-disable react/prop-types */
+import { Avatar, Button } from "@nextui-org/react"
 import { Link } from "react-router-dom"
-import {
-    Card,
-    CardBody,
-    CardFooter,
-    Image,
-    Button
-} from "@nextui-org/react"
 
 const UserCard = ({ user }) => {
 
   return (
-    <Card className="py-4 w-50 bg-white text-black transform transition-all hover:-translate-y-2 duration-300 shadow-lg hover:shadow-2xl">
-                <CardBody className="overflow-visible py-2">
-                    <Image
-                        alt="Card background"
-                        className="size-40 object-cover rounded-xl"
-                        src={user.avatar}
-                        width="full"
-                    />
-              </CardBody>
-              <CardFooter>
-              <Button
-                  className="w-full bg-orange-500 hover:bg-orange-600"
-              >
-                    <Link to={`/profile/${user._id}`}> See Profile </Link>
-                  </Button>
-              </CardFooter>
-          </Card>
+    <div className="relative rounded-lg px-2 py-2 flex items-center space-x-3 mb-3 border border-orange-500">
+        <div className="flex-shrink-0">
+            <Avatar src={user.avatar} alt="avatar" />
+        </div>
+        <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between flex-shrink-0">
+                  <p className="text-white">{user.username}</p>
+            </div>
+        </div>
+        <div className="flex items-center justify-between">
+              <Link to={`/profile/${user._id}`}>
+                <Button size="sm" className="bg-orange-500 text-white uppercase">
+                    Profile
+                </Button>
+              </Link>
+        </div>
+    </div>
   )
 }
 

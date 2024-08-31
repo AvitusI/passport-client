@@ -1,10 +1,11 @@
 import { useMutation } from "@tanstack/react-query"
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 import axios from "axios"
 import { Button } from '@nextui-org/react'
+import { SpellCheck2 } from "lucide-react"
 
 import { toast } from "react-toastify"
 
@@ -55,12 +56,12 @@ const SignInComponent = () => {
   return (
       <div className='w-full'>
           {/* login container */}
-          <div className="flex max-w-3xl items-center">
+          <div className="flex items-center">
               {/* login form */}
-              <div className="px-1">
-                  <h2 className="font-bold text-2xl text-orange-500 text-center">Login</h2>
-                  <p className="text-sm mt-4 text-orange-500">If you already a member, easily log in</p>
-
+            <div className="flex flex-col items-center justify-center">
+                  <div className="w-[300px] max-w-[600px] flex justify-center items-center">
+                       <SpellCheck2 className="text-orange-500" />
+                  </div>
                   <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col  gap-4 w-full">
                       <input
                           className={`p-2 mt-8 rounded-xl border-2 outline-none w-full ${
@@ -76,7 +77,6 @@ const SignInComponent = () => {
                               {errors.email.message}
                             </div>
                           )}
-                      <div className='relative'>
                         <input
                              className={`p-2 rounded-xl focus:outline-none border-2 w-full ${
                                 errors.password ? "text-red-500 border-red-500" : "text-white border-orange-500"
@@ -86,26 +86,27 @@ const SignInComponent = () => {
                             placeholder="******"
                             {...register("password")}
                           />
-                        </div>
                         {errors.password && (
                         <div className='mt-1 text-red-500 text-sm'>
                           {errors.password.message}
                         </div>
                         )}
                       <Button
-                        className="bg-orange-500 rounded-xl py-2 hover:scale-105 duration-300"
+                        className="bg-orange-500 rounded-xl py-2 hover:scale-105 duration-300 mt-4"
                         isLoading={isSubmitting || isPending}
                         type="submit"
                       >
                           Login
                       </Button>
                   </form>
-
-                  
               </div>
-              </div>
+      </div>
 
-            
+      <Link to={`/requestResetPassword`}>
+        <div className="mt-5 hover:italic">
+          <p className='text-xs text-orange-500'>Forgot your password?</p>
+          </div>
+        </Link>
     </div>
   )
 }

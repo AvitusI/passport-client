@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { Link } from "react-router-dom"
-import { MessageSquareMore, ListCollapse } from "lucide-react"
+import { MessageSquareMore, Ellipsis, Bookmark } from "lucide-react"
 import {
   Avatar,
   Button,
@@ -15,7 +15,8 @@ import {
     ModalContent,
     ModalBody,
     ModalFooter,
-    useDisclosure
+    useDisclosure,
+    Image
 } from "@nextui-org/react"
 
 import { useUser } from "../context/UserContext"
@@ -60,63 +61,95 @@ const Post = ({ post }) => {
   }
 
   return (
-      <div className="flex flex-col bg-white text-black p-4 rounded-lg mb-6 sm:mb-10 border-2 border-orange-500">
-          <div className="flex justify-between items-center">    
-            <div className="flex justify-start items-center mb-2">
-              <Avatar src={post.author.avatar} alt="avatar" className="size-10 mr-3" />
-              <p className="font-semibold text-2xl">{post.author.username }</p>
-        </div>
-        <Popover showArrow placement="bottom" backdrop="blur">
-          <PopoverTrigger>
-            <Button
-              isIconOnly
-              className="text-red-500 data-[hover]:bg-slate-200"
-              radius="full"
-              variant="light"
-            >
-              <ListCollapse size={20} color="black" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <div>
-              <ListDetails type={"edit"} postId={post._id}>Edit Post</ListDetails>
-              <ListDetails type={"delete"} onOpen={onOpen}>Delete Post</ListDetails>
-            </div>
-          </PopoverContent>
-          </Popover>
-          <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center" size="xs">
-                  <ModalContent>
-                      {(onClose) => (
-                          <>
-                              <ModalHeader>Are you sure?</ModalHeader>
-                              <ModalBody>
-                                  <p>This action is irreversible</p>
-                              </ModalBody>
-                              <ModalFooter>
-                                  <Button onClick={onClose}>Cancel</Button>
-                                  <Button color="danger">Proceed</Button>
-                              </ModalFooter>
-                          </>
+      <div className="bg-white max-w-96 rounded-md pb-2 text-black mb-8 sm:mb-12">
+                    <header className="px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center font-bold">
+                            <span className="mr-2">
+                                <Avatar src={post.author.avatar} alt="logo" />
+                            </span>
+                            <span>{post.author.username}</span>
+                          </div>
+                          <div className="float-right">
+                          <Popover showArrow placement="bottom" backdrop="blur">
+                            <PopoverTrigger>
+                              <Button
+                                isIconOnly
+                                className="text-red-500 data-[hover]:bg-slate-200"
+                                radius="full"
+                                variant="light"
+                              >
+                                <span><Ellipsis /></span>
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent>
+                              <div>
+                                <ListDetails type={"edit"} postId={post._id}>Edit Post</ListDetails>
+                                <ListDetails type={"delete"} onOpen={onOpen}>Delete Post</ListDetails>
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                          <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center" size="xs">
+                            <ModalContent>
+                              {(onClose) => (
+                                <>
+                                  <ModalHeader>Are you sure?</ModalHeader>
+                                  <ModalBody>
+                                    <p>This action is irreversible</p>
+                                  </ModalBody>
+                                  <ModalFooter>
+                                    <Button onClick={onClose}>Cancel</Button>
+                                    <Button color="danger">Proceed</Button>
+                                  </ModalFooter>
+                                </>
+                              )}
+                            </ModalContent>
+                          </Modal>
+                        </div>
+                    </header>
+
+                    <div className="px-4">
+                        <p className="italic text-gray-600 text-sm">
+                            A moment ago
+                        </p>
+                    </div>
+
+                    <div className="px-4 py-3">
+                        <p>{post.content}</p>
+                    </div>
+        
+                    {post.pic && (
+                      <div className="max-w-96">
+                        <Image src={post.pic} alt="pic" className="w-auto rounded-none object-cover" />
+                      </div>
                       )}
-                  </ModalContent>
-              </Modal>
-          </div>
-          <div className="flex flex-col mb-3 border-b-2 p-4">
-            <p className="text-sm mb-1">{post.content}</p>
-            {post.pic && (
-              < img src={post.pic} alt="post" className="object-cover rounded-md w-full size-40" />
-            )}
-          </div>
-          <div className="flex justify-between p-4">
-        <div className="flex justify-start items-center">
-            <p className="text-sm">{post.likes.length > 0 ? post.likes.length : null}</p>
-                <LikeButton liked={liked} action={likeAction} isPending={isPending} />
-              </div>
-              <Link to={`/post/${post._id}`}>
-                  <MessageSquareMore />
-                </Link>
-          </div>
-    </div>
+
+                    <div className="px-2 pt-2">
+                        <div className="grid grid-cols-3 items-center p-4 border-b-2 border-t-2 border-b-gray-300 border-t-gray-300">
+                            <div className="border-r-2 border-r-gray-300 flex justify-center items-center">
+                                <div className="flex justify-center items-center gap-2">
+                                    <p className="text-sm font-bold">{post.likes.length > 0 ? post.likes.length : null}</p>
+                                    <LikeButton liked={liked} action={likeAction} isPending={isPending} />
+                                </div>
+                            </div>
+                            <div className="border-r-2 border-r-gray-300 flex justify-center">
+                                <Link to={`/post/${post._id}`}>
+                                  <div className="flex justify-center items-center gap-2">
+                                      <p className="text-xs font-bold">
+                                        {post.comments.length > 0 ? post.comments.length : null}
+                                      </p>
+                                    <MessageSquareMore size={16} />
+                                  </div>
+                                </Link>
+                            </div>
+                            <div className="flex justify-center items-center">
+                                <div>
+                                    <Bookmark size={16} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
   )
 }
 

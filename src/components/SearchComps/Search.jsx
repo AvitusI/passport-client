@@ -36,7 +36,7 @@ export const Search = ({
         <div>
             { queryText && (
                 <div
-                    className="overflow-y-auto max-h[70vh] p-4"
+                    className="overflow-y-auto max-h-[70vh] p-4"
                 >
                     <div className="px-4">
                         <div className="border border-t-1 pt-2 pb-4">

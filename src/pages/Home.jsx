@@ -20,13 +20,14 @@ function Home() {
   }
   
   return (
-    <div className="flex justify-center items-center">
-    <div className="min-h-screen p-4 sm:w-1/3">
-      <Tabs  color="orange-500" aria-label="Options">
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="p-4 w-[340px] max-w-[600px] flex flex-col gap-3">
+        <div className="w-full">
+      <Tabs radius="full" color="warning">
         <Tab
           key='Login'
           title={
-            <div className="flex items-center space-x-2 text-orange-500">
+            <div className="flex items-center space-x-2 text-white font-bold">
               <LogIn />
               <span>Login</span>
           </div>
@@ -37,7 +38,7 @@ function Home() {
         <Tab
           key='Signup'
           title={
-            <div className="flex items-center space-x-2 text-orange-500">
+            <div className="flex items-center space-x-2 text-white font-bold">
               <ClipboardPen />
               <span>Signup</span>
             </div>
@@ -46,9 +47,12 @@ function Home() {
           <SignUpComponent />
         </Tab>
 
-      </Tabs>
+          </Tabs>
+        </div>
+        
+        <div className="w-full">
 
-      <div className="mt-10 grid grid-cols-3 items-center text-orange-500 w-full">
+                <div className="mt-10 grid grid-cols-3 items-center text-orange-500 w-full">
                       <hr className="border-orange-500" />
                       <p className="text-center">OR</p>
                       <hr className="border-orange-500" />
@@ -77,12 +81,10 @@ function Home() {
                       <img src='/svg/discord_icon.svg' alt='discord icon' className=' bg-orange-500 rounded-full size-6 mr-3' />
                       <span>Login with Discord</span>
                   </button>
-
-                  <div className='mt-5 py-4'>
-                      <p className='text-xs text-orange-500'>Forgot your password?</p>
-                  </div>
-        </div>
+          
+          </div>
       </div>
+    </div>
   )
 }
 

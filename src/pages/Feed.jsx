@@ -97,7 +97,7 @@ const Feed = () => {
                         <PostCard />
                     </div>
                     {/* This is the main feed */}
-                    <div className="mt:10 sm:mt-16">
+                    <div className="mt:10 sm:mt-16 p-4">
                             {data.pages.map((page) => {
                                 return (
                                     <div key={page.currentPage} className="flex flex-col gap-2">

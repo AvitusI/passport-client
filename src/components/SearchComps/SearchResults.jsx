@@ -3,7 +3,7 @@ export const SearchResults = ({ searchResults }) => {
 
     return (
         <div className="grid gap-y-[1rem]">
-            {searchResults.map((user) => (
+            {searchResults.slice(0, 3).map((user) => (
                 <div
                     key={user._id}
                     className="hover:bg-orange-400 hover:text-white text-black"

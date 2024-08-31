@@ -24,6 +24,7 @@ import EditPost from './pages/EditPost';
 import EditProfile from './pages/EditProfile';
 import RequestResetPassword from './pages/RequestResetPassword';
 import ResetPassword from './pages/ResetPassword';
+import Founder from './pages/Founder';
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
             <Route path='/test' element={<Test />} />
             <Route path='/requestResetPassword' element={<RequestResetPassword />} />
             <Route path='/resetPassword' element={<ResetPassword />} />
+            <Route path='/founder' element={<Founder />} />
 
           <Route element={<PrivateRoute />}>
               <Route path='/feed' element={<Feed />} />
