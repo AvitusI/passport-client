@@ -12,11 +12,12 @@ import {
     Modal,
     ModalContent,
     ModalBody,
-    useDisclosure
+    useDisclosure,
 } from "@nextui-org/react"
-import { Bookmark, Ellipsis, Heart, MessageSquareMore, Send, Smile } from "lucide-react"
+import { Bookmark, Ellipsis, Heart, MessageSquareMore, Send, Smile, Reply, SendHorizontal } from "lucide-react"
 
 import { getFollowersSummary } from "../utils/followerSummary"
+import { formatTimeDifference } from "../utils/formatTime"
 
 const post = {
     content: "Hi, there. I'm so excited to share with you a couple of things I have got today. But before I take charge, I would love to know more about you, at least an introduction.",
@@ -69,9 +70,86 @@ const followedUsers = [
     }
 ]
 
+const comment = {
+    content: "Mhh I don't think the same way. If God intended us to be the same, He would give us the same size of our legs.",
+    avatar: "/images/founder.jpg",
+    likes: 4,
+    replies: 8,
+    username: "John Doe",
+    time: "2 hours ago"
+}
+
+const replies = [
+    {
+        id: "1",
+        content: "I don't think so, I have a different opinion. It is not about the size of the legs, but the size of the heart.",
+        avatar: "/images/milk.jpg",
+        likes: 2,
+        username: "Jane Doe",
+        time: "2 hours ago"
+    },
+    {
+        id: "2",
+        content: "Yes, sure!",
+        avatar: "/images/baloon.jpg",
+        likes: 3,
+        username: "Jane Doe",
+        time: "2 hours ago"
+    },
+    {
+        id: "3",
+        content: "I don't think so, I have a different opinion",
+        avatar: "/images/honey.jpg",
+        likes: 3,
+        username: "Jane Doe",
+        time: "2 hours ago"
+    },
+    {
+        id: "4",
+        content: "I don't think so, I have a different opinion",
+        avatar: "/images/founder.jpg",
+        likes: 3,
+        username: "Jane Doe",
+        time: "2 hours ago"
+    },
+    {
+        id: "5",
+        content: "I don't think so, I have a different opinion",
+        avatar: "/images/founder.jpg",
+        likes: 3,
+        username: "Jane Doe",
+        time: "2 hours ago"
+    },
+    {
+        id: "6",
+        content: "I don't think so, I have a different opinion",
+        avatar: "/images/founder.jpg",
+        likes: 3,
+        username: "Jane Doe",
+        time: "2 hours ago"
+    },
+    {
+        id: "7",
+        content: "I don't think so, I have a different opinion",
+        avatar: "/images/founder.jpg",
+        likes: 3,
+        username: "Jane Doe",
+        time: "2 hours ago"
+    },
+    {
+        id: "8",
+        content: "I don't think so, I have a different opinion",
+        avatar: "/images/founder.jpg",
+        likes: 3,
+        username: "Jane Doe",
+        time: "2 hours ago"
+    }
+]
+
 export default function Test() {
 
     const [isFollowed, setIsFollowed] = useState(false)
+    const [sendMessage, setSendMessage] = useState();
 
     const { isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -150,7 +228,7 @@ export default function Test() {
 
                     <div className="px-4">
                         <p className="italic text-gray-600 text-sm">
-                            A moment ago
+                            {formatTimeDifference(new Date("2023-09-01T13:00:00Z"))}
                         </p>
                     </div>
 
@@ -422,8 +500,8 @@ export default function Test() {
                             <span>{getFollowersSummary(followedUsers)}</span>
                         </div>
                         <Modal
-                            isOpen={isOpen}
-                            onOpenChange={onOpenChange}
+                           // isOpen={isOpen}
+                         //   onOpenChange={onOpenChange}
                             placement="center"
                         >
                             <ModalContent>
@@ -462,6 +540,102 @@ export default function Test() {
                     </div>
 
                 </section>
+
+                <div className="m-2 p-2">
+                    <Button
+                        size="sm"
+                        radius="full"
+                        className="bg-orange-500 text-white uppercase"
+                        onClick={onOpen}
+                    >
+                        Reply
+                    </Button>
+                    <Modal
+                        isOpen={isOpen}
+                        onOpenChange={onOpenChange}
+                        placement="top"
+                    >
+                        <ModalContent>
+                            <ModalBody>
+                                <div className="max-h-[700px] h-auto flex flex-col gap-2 sm:gap-4">
+                                    {/** Comment */}
+                                    <div className="flex-none p-4 ">
+                                        <div className="flex justify-start gap-4">
+                                            <div className="flex-1">
+                                                <Avatar src={comment.avatar} alt="avatar" />
+                                            </div>
+                                            <div className="flex flex-col gap-4 w-full pt-2">
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-md font-semibold leading-none text-default-800">
+                                                        {comment.username}
+                                                    </span>
+                                                    <span className="text-xs italic text-default-800">{comment.time}</span>
+                                                </div>
+                                                <p className="text-md">{comment.content}</p>
+                                                <div className="flex justify-between border-t-2 border-gray-300 pt-3">
+                                                    <div className="flex justify-center items-center gap-2">
+                                                        <span>{comment.likes}</span>
+                                                        <Heart size={16} fill="red" />
+                                                    </div>
+                                                    <div className="flex justify-center items-center gap-2">
+                                                        <span>{comment.replies}</span>
+                                                        <Reply size={16} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/** Replies */}
+                                    <div className="flex-1 overflow-y-auto max-h-[300px]">
+                                        {replies.map((reply) => (
+                                            <div key={reply.id} className="p-4">
+                                                <div className="flex justify-start gap-4">
+                                                    <div className="flex-1">
+                                                        <Avatar src={reply.avatar} alt="avatar" />
+                                                    </div>
+                                                    <div className="flex flex-col gap-4 w-full pt-2">
+                                                        <div className="flex justify-between items-center">
+                                                            <span className="text-md font-semibold leading-none text-default-800">
+                                                                {reply.username}
+                                                            </span>
+                                                            <span className="text-xs italic text-default-800">{reply.time}</span>
+                                                        </div>
+                                                        <p className="text-sm">{reply.content}</p>
+                                                        <div className="flex justify-between border-t-2 border-gray-300 pt-3">
+                                                            <div className="flex justify-center items-center gap-2">
+                                                                <span>{reply.likes}</span>
+                                                                <Heart size={16} fill="red" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {/* Input */}
+                                    <div className="flex-none">
+                                        <div className="relative flex">
+                                            <textarea
+                                                placeholder="Write your reply"
+                                                rows="1"
+                                                className="focus:outline-none focus:ring-orange-500 focus:ring-2 w-full focus:placeholder-gray-600 text-gray-700 placeholder-gray-500 pl-12 pr-12 bg-gray-100 rounded-full py-3 border-gray-200 resize-none"
+                                                value={sendMessage}
+                                                onChange={(e) => setSendMessage(e.target.value)}
+                                            ></textarea>
+                                            <span className={`absolute inset-y-0 items-center right-0 ${sendMessage ? "flex" : "hidden"}`}>
+                                                <button
+                                                    className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out bg-orange-500 hover:bg-orange-600 text-white"
+                                                >
+                                                    <SendHorizontal />
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ModalBody>
+                        </ModalContent>
+                    </Modal>
+                </div>
 
             </section>
         </div>

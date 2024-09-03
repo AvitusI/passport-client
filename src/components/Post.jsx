@@ -3,6 +3,7 @@ import { useState } from "react"
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
 import { MessageSquareMore, Ellipsis, Bookmark } from "lucide-react"
 import {
   Avatar,
@@ -23,12 +24,14 @@ import { useUser } from "../context/UserContext"
 import LikeButton from "./LikeButton"
 import ListDetails from "./ListDetails"
 import { queryClient } from "../main"
+import { formatTimeDifference } from "../utils/formatTime"
 
 const Post = ({ post }) => {
 
   const { user } = useUser()
 
   const likeStatus = post.likes.some((like) => like._id === user._id)
+  const isAuthor = post.author._id === user._id
 
   const [liked, setLiked] = useState(likeStatus)
 
@@ -45,19 +48,38 @@ const Post = ({ post }) => {
     }
   }
 
-  const { mutate, isPending } = useMutation({
+  const deletePost = async () => {
+    const { data } = await axios.delete(`http://localhost:5000/api/posts/${post._id}`, { withCredentials: true })
+    return data
+  }
+
+  const { mutate: mutateLike, isPending } = useMutation({
     mutationFn: sendLike,
     onSuccess: () => {
       setLiked(!liked)
       queryClient.invalidateQueries(['items'], { refetchActive: true })
     },
-    onError: (error) => { 
-      console.log(error)
+    onError: () => { 
+      toast.error("Failed to like post")
+    }
+  })
+
+  const { mutate: mutateDelete, isPending: pendingDeletion } = useMutation({
+    mutationFn: deletePost,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['items'], { refetchActive: true })
+    },
+    onError: () => {
+      toast.error("Failed to delete post")
     }
   })
 
   const likeAction = () => {
-    mutate({ id: post._id })
+    mutateLike({ id: post._id })
+  }
+
+  const deleteAction = () => { 
+    mutateDelete()
   }
 
   return (
@@ -74,7 +96,7 @@ const Post = ({ post }) => {
                             <PopoverTrigger>
                               <Button
                                 isIconOnly
-                                className="text-red-500 data-[hover]:bg-slate-200"
+                                className={`text-black data-[hover]:bg-slate-200 ${isAuthor ? "" : "hidden"}`}
                                 radius="full"
                                 variant="light"
                               >
@@ -98,7 +120,7 @@ const Post = ({ post }) => {
                                   </ModalBody>
                                   <ModalFooter>
                                     <Button onClick={onClose}>Cancel</Button>
-                                    <Button color="danger">Proceed</Button>
+                                    <Button color="danger" onClick={deleteAction} isDisabled={pendingDeletion}>Proceed</Button>
                                   </ModalFooter>
                                 </>
                               )}
@@ -109,7 +131,7 @@ const Post = ({ post }) => {
 
                     <div className="px-4">
                         <p className="italic text-gray-600 text-sm">
-                            A moment ago
+                            {formatTimeDifference(new Date(post.createdAt))}
                         </p>
                     </div>
 

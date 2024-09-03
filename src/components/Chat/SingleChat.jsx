@@ -5,6 +5,7 @@ import { Spinner } from "@nextui-org/react"
 
 import Message from "./Message";
 import { useUser } from "../../context/UserContext"
+import { useEffect } from "react";
 
 // fetch the messages from individual chat here, use the selectedChat context to fetch the messages, OR
 // receive chatId as props from ChatBox component
@@ -17,14 +18,22 @@ const fetchMessages = async ({ queryKey }) => {
 
 const SingleChat = () => {
 
-    const { user, selectedChat } = useUser()
+    const { user, selectedChat, chatMessages, setChatMessages } = useUser()
 
     const chatId = selectedChat._id
 
-    const { data, status, error } = useQuery({
+    const { data, status, error, isSuccess } = useQuery({
         queryKey: ["messages-fetched", chatId],
-        queryFn: fetchMessages
+        queryFn: fetchMessages,
     })
+
+    // set the chat messages in the context
+    useEffect(() => {
+        if (isSuccess) {
+            setChatMessages(data);
+            console.log(data)
+        }
+    }, [data, isSuccess, setChatMessages])
 
     return status === "pending" ? (
         <div className="h-full w-full flex items-center justify-center">
@@ -38,7 +47,7 @@ const SingleChat = () => {
             <ScrollableFeed
                 className="message flex flex-col space-y-5 p-1 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-hidden scrollbar-track-blue-lighter scrollbar-w-2 scrollbar-touch"
             >
-                    {data.map((message) => (
+                    {chatMessages.map((message) => (
                         <Message key={message._id} message={message} user={user} />
                     ))}
             </ScrollableFeed>

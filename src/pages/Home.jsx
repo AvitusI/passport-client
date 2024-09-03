@@ -1,11 +1,25 @@
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { Tabs, Tab } from "@nextui-org/react"
 import { LogIn, ClipboardPen } from 'lucide-react'
 
 import SignInComponent from "../components/SignIn"
 import SignUpComponent from "../components/SignUp"
 
+import { useUser } from "../context/UserContext"
+
 
 function Home() {
+
+  const { user } = useUser()
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (user) {
+      navigate('/feed')
+    }
+  })
 
   const doSubmitGoogle = () => {
         window.location.href = 'http://localhost:5000/api/auth/google'
@@ -27,7 +41,7 @@ function Home() {
         <Tab
           key='Login'
           title={
-            <div className="flex items-center space-x-2 text-white font-bold">
+            <div className="flex items-center space-x-2 text-white font-bold pr-5 pl-5">
               <LogIn />
               <span>Login</span>
           </div>
@@ -38,7 +52,7 @@ function Home() {
         <Tab
           key='Signup'
           title={
-            <div className="flex items-center space-x-2 text-white font-bold">
+            <div className="flex items-center space-x-2 text-white font-bold pr-5 pl-5">
               <ClipboardPen />
               <span>Signup</span>
             </div>

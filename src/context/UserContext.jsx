@@ -16,6 +16,7 @@ const UserProvider = props => {
     const [loading, setLoading] = useState(true);
     const [notifications, setNotifications] = useState([]);
     const [selectedChat, setSelectedChat] = useState("");
+    const [chatMessages, setChatMessages] = useState([]);
     const [messageNotification, setMessageNotification] = useState([]);
 
     // Also fetch notifications in here
@@ -73,6 +74,8 @@ const UserProvider = props => {
         setNotifications,
         selectedChat,
         setSelectedChat,
+        chatMessages,
+        setChatMessages,
         messageNotification,
         setMessageNotification
     }

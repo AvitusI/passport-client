@@ -10,8 +10,9 @@ import FeedBar from "../components/FeedBar"
 import PostCard from "../components/PostCard"
 import Post from "../components/Post"
 import Navbar from "../components/Navbar"
-import ProfileCard from "../components/ProfileCard"
+//import ProfileCard from "../components/ProfileCard"
 
+/*
 const profiles = [
     {
         name: "John Doe",
@@ -44,6 +45,7 @@ const profiles = [
         posts: 0
     }
 ]
+*/
 
 const fetchUserFeed = async ({ pageParam }) => {
     //await new Promise((resolve) => setTimeout(resolve, 3000))
@@ -121,13 +123,14 @@ const Feed = () => {
                                     }
                             </div>
                             </div>
+                            {/*}
                             {!isFetchingNextPage &&
                                 <div className="container flex p-4 overflow-x-scroll bg-black gap-10">
                                     {profiles.map((profile) => (
                                         <ProfileCard key={profile.name} profile={profile} />
                                     ))}
                                 </div>
-                            }
+                            } */}
                 </div>
                 {/*  blank column in large devices*/}
                 <div className="w-1/3 hidden lg:block">

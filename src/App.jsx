@@ -25,6 +25,7 @@ import EditProfile from './pages/EditProfile';
 import RequestResetPassword from './pages/RequestResetPassword';
 import ResetPassword from './pages/ResetPassword';
 import Founder from './pages/Founder';
+import EditComment from './pages/EditComment';
 
 const App = () => {
   return (
@@ -38,7 +39,6 @@ const App = () => {
             <Route path='/test' element={<Test />} />
             <Route path='/requestResetPassword' element={<RequestResetPassword />} />
             <Route path='/resetPassword' element={<ResetPassword />} />
-            <Route path='/founder' element={<Founder />} />
 
           <Route element={<PrivateRoute />}>
               <Route path='/feed' element={<Feed />} />
@@ -48,7 +48,9 @@ const App = () => {
               <Route path='/post' element={<PostUpload />} />
               <Route path='/explore' element={<Explore />} />
               <Route path='/edit/post/:postId' element={<EditPost />} />
+              <Route path='/edit/comment/:commentId' element={<EditComment />} />
               <Route path='/edit/user/:userId' element={<EditProfile />} />
+              <Route path='/founder' element={<Founder />} />
           </Route>
         </Routes>
         </BrowserRouter>

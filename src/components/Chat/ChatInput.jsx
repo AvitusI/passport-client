@@ -12,7 +12,7 @@ const ChatInput = ({ selectedChat }) => {
 
   const [sendMessage, setSendMessage] = useState("")
 
-  const { user } = useUser()
+  const { user, chatMessages, setChatMessages } = useUser()
 
   const sendMsg = async (messageObj) => { 
     const { data } = await axios.post('http://localhost:5000/api/messages',  messageObj , { withCredentials: true })
@@ -23,15 +23,6 @@ const ChatInput = ({ selectedChat }) => {
     mutationFn: sendMsg,
     onSuccess: async () => {
       queryClient.invalidateQueries(['messages'], { refetchActive: true })
-      const message = {
-        _id: new Date(Date.now()),
-        sender: user,
-        content: sendMessage,
-        createdAt: new Date(Date.now()),
-        chatId: selectedChat._id
-      }
-      await socket.emit("send_message", message)
-      setSendMessage("")
     },
     onError: (error) => { 
       console.log(error)
@@ -44,13 +35,33 @@ const ChatInput = ({ selectedChat }) => {
     console.log(currentMessages)
      queryClient.setQueryData(["messages-fetched", selectedChat._id], [...currentMessages, message])
     })
-  }, [])
+  }, [selectedChat])
 
-  const submit = () => {
+  const submit = async  () => {
     const messageObj = {
       content: sendMessage,
       chatId: selectedChat._id
     }
+    setChatMessages(
+      [...chatMessages,
+        {
+          ...messageObj,
+          sender: user,
+          _id: new Date(Date.now()),
+          createdAt: new Date(Date.now())
+        }]
+    )
+
+    const message = {
+        _id: new Date(Date.now()),
+        sender: user,
+        content: sendMessage,
+        createdAt: new Date(Date.now()),
+        chatId: selectedChat._id
+    }
+    
+    await socket.emit("send_message", message)
+    setSendMessage("")
     mutate(messageObj)
   }
 
