@@ -1,4 +1,5 @@
 export const groupByUser = (notifications) => {
+  if (!notifications) return;
   return notifications.reduce((acc, notification) => {
     const { senderId } = notification;
     const { _id } = senderId;
@@ -16,6 +17,7 @@ export const groupByUser = (notifications) => {
 };
 
 export const transformNotification = (groupedNotifications) => {
+  if (!groupedNotifications) return;
   return Object.values(groupedNotifications).map((group) => {
     return {
       message: `${group.username} messaged you`,

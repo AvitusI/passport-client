@@ -18,8 +18,8 @@ const UserProvider = props => {
     const [selectedChat, setSelectedChat] = useState("");
     const [chatMessages, setChatMessages] = useState([]);
     const [messageNotification, setMessageNotification] = useState([]);
+    const [refetchFlag, setRefetchFlag] = useState(false);
 
-    // Also fetch notifications in here
 
     useEffect(() => {
         const fetchData = async () => {
@@ -60,10 +60,14 @@ const UserProvider = props => {
             }
         };
         fetchData();
-    }, [selectedChat, setSelectedChat])
+    }, [selectedChat, setSelectedChat, refetchFlag])
 
     const updateUser = user => {
         setUser(user);
+    }
+
+    const refetchNotifications = () => {
+        setRefetchFlag((prev) => !prev);
     }
 
     const value = {
@@ -77,7 +81,8 @@ const UserProvider = props => {
         chatMessages,
         setChatMessages,
         messageNotification,
-        setMessageNotification
+        setMessageNotification,
+        refetchNotifications
     }
 
     return (

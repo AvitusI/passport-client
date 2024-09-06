@@ -29,12 +29,10 @@ const Comment = ({ comment }) => {
 
   const { isOpen, onOpen, onOpenChange} = useDisclosure()
 
-  const { user } = useUser();
+  const { user, refetchNotifications } = useUser();
 
   const likeStatus = comment.likes.some((like) => like._id === user._id)
   const isAuthor = comment.userId._id === user._id
-
-  console.log(comment)
 
   const [liked, setLiked] = useState(likeStatus)
 
@@ -57,7 +55,7 @@ const Comment = ({ comment }) => {
   const { mutate: mutateLike, isPending } = useMutation({
     mutationFn: sendLike,
     onSuccess: () => {
-      setLiked(!liked)
+      refetchNotifications()
       queryClient.invalidateQueries(['post', comment.postId], { refetchActive: true })
     },
     onError: (error) => { 
@@ -76,6 +74,7 @@ const Comment = ({ comment }) => {
   }) 
 
   const likeAction = () => {
+    setLiked(!liked)
     mutateLike({ id: comment._id })
   }
 
@@ -104,7 +103,7 @@ const Comment = ({ comment }) => {
                     </PopoverTrigger>
                     <PopoverContent>
                       <div>
-                        <ListDetailsComment type={"edit"} postId={comment._id}>Edit Comment</ListDetailsComment>
+                        <ListDetailsComment type={"edit"} commentId={comment._id}>Edit Comment</ListDetailsComment>
                         <ListDetailsComment type={"delete"} onOpen={onOpen}>Delete Comment</ListDetailsComment>
                       </div>
                     </PopoverContent>

@@ -14,7 +14,7 @@ import {
     ModalBody,
     useDisclosure,
 } from "@nextui-org/react"
-import { Bookmark, Ellipsis, Heart, MessageSquareMore, Send, Smile, Reply, SendHorizontal } from "lucide-react"
+import { Bookmark, Ellipsis, Heart, MessageSquareMore, Send, Smile, Reply, SendHorizontal, ImageUp } from "lucide-react"
 
 import { getFollowersSummary } from "../utils/followerSummary"
 import { formatTimeDifference } from "../utils/formatTime"
@@ -146,10 +146,98 @@ const replies = [
     }
 ]
 
+const notifications = [
+    {
+        id: "1",
+        type: "LikeNotification",
+        avatar: "/images/founder.jpg",
+        message: "John Doe liked your post",
+        read: false
+    },
+    {
+        id: "2",
+        type: "FollowNotification",
+        avatar: "/images/founder.jpg",
+        message: "Jane Doe started following you",
+        read: false
+    },
+    {
+        id: "3",
+        type: "CommentNotification",
+        avatar: "/images/founder.jpg",
+        message: "Peter Othiong commented on your post",
+        read: false
+    },
+    {
+        id: "4",
+        type: "LikeNotification",
+        avatar: "/images/founder.jpg",
+        message: "John Doe liked your post",
+        read: true
+    },
+    {
+        id: "5",
+        type: "LikeNotification",
+        avatar: "/images/founder.jpg",
+        message: "John Doe liked your comment",
+        read: true
+    },
+    {
+        id: "6",
+        type: "LikeNotification",
+        avatar: "/images/founder.jpg",
+        message: "John Doe liked your reply",
+        read: true
+    },
+    {
+        id: "7",
+        type: "ReplyNotification",
+        avatar: "/images/founder.jpg",
+        message: "John Doe replied to your comment",
+        read: true
+    }
+]
+
+const messageNotification = [
+    {
+        id: "1",
+        avatar: "/images/founder.jpg",
+        message: "Sam Smith messaged you",
+        read: false
+    },
+    {
+        id: "2",
+        avatar: "/images/founder.jpg",
+        message: "Kelvin Hamza messaged you",
+        read: false
+    },
+    {
+        id: "3",
+        avatar: "/images/founder.jpg",
+        message: "John Doe messaged you",
+        read: true
+    },
+    {
+        id: "4",
+        avatar: "/images/founder.jpg",
+        message: "Jane Doe messaged you",
+        read: true
+    },
+    {
+        id: "5",
+        avatar: "/images/founder.jpg",
+        message: "Abdul Kharim messaged you",
+        read: true
+    }
+]
+
 export default function Test() {
 
     const [isFollowed, setIsFollowed] = useState(false)
     const [sendMessage, setSendMessage] = useState();
+
+    const [message, setMessage] = useState("");
+    const [commentMsg, setCommentMsg] = useState("");
 
     const { isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -636,6 +724,123 @@ export default function Test() {
                         </ModalContent>
                     </Modal>
                 </div>
+
+                <div className="flex flex-col gap-2 text-white">
+                    <div className="m-2 mb-4 text-center">
+                        <p className="text-2xl">All Notifications</p>
+                    </div>
+                    {notifications.map((notification) => (
+                            <div key={notification.id} className="max-w-[400px] relative rounded-lg px-2 py-2 grid grid-cols-custom gap-2 items-center mb-3">
+                                <div className="flex-shrink-0">
+                                    <Avatar src={notification.avatar} alt="avatar" size="sm" />
+                                </div>
+                                <div className="grid grid-cols-customized items-center">
+                                    <span className="text-sm text-default-600">{notification.message}</span>
+                                    <span className={`text-red-600 ${notification.read ? "hidden" : ""}`}>
+                                        <svg width={10} height={10}>
+                                            <circle cx={5} cy={5} r={5} fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                    ))}
+                </div>
+
+                <div className="flex flex-col gap-2 text-white">
+                    <div className="m-2 mb-4 text-center">
+                        <p className="text-2xl">All Message Notifications</p>
+                    </div>
+                    {messageNotification.map((notification) => (
+                            <div key={notification.id} className="max-w-[400px] relative rounded-lg px-2 py-2 grid grid-cols-custom gap-2 items-center mb-3">
+                                <div className="flex-shrink-0">
+                                    <Avatar src={notification.avatar} alt="avatar" size="sm" />
+                                </div>
+                                <div className="grid grid-cols-customized items-center">
+                                    <span className="text-sm text-default-600">{notification.message}</span>
+                                    <span className={`text-red-600 ${notification.read ? "hidden" : ""}`}>
+                                        <svg width={10} height={10}>
+                                            <circle cx={5} cy={5} r={5} fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                    ))}
+                </div>
+
+                <article className="bg-white w-96 rounded-md pb-2">
+                    <header className="px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center font-bold">
+                            <span className="mr-2">
+                                <Avatar src="/images/founder.jpg" alt="logo" />
+                            </span>
+                            <h4 className="text-small font-semibold leading-none">John Doe</h4>
+                        </div>
+                    </header>
+
+                    <div className="px-4 py-3">
+                        <textarea
+                            className="w-full p-2 h-16 focus:outline-none bg-white text-black placeholder:text-gray-700"
+                            placeholder="Any thoughts today?"
+                            onChange={(e) => setMessage(e.target.value)}
+                            value={message}
+                        ></textarea>
+                    </div>
+
+                    <div className="px-2 pt-2">
+                        <div className="flex items-center justify-between p-4 border-t-2 border-t-gray-300">
+                            <Button
+                                isIconOnly
+                                radius="full"
+                                className="bg-white text-black hover:bg-gray-300 cursor-pointer"
+                            >
+                                <ImageUp size={24} />
+                            </Button>
+                            <Button
+                                isIconOnly
+                                radius="full"
+                                className="bg-orange-500 text-white hover:bg-orange-700 cursor-pointer"
+                                isDisabled={!message}
+                            >
+                                <SendHorizontal size={24} />
+                            </Button>
+                        </div>
+                    </div>
+
+                </article>
+
+                <article className="bg-white w-96 rounded-md pb-2">
+                    <header className="px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center font-bold">
+                            <span className="mr-2">
+                                <Avatar src="/images/founder.jpg" alt="logo" />
+                            </span>
+                            <h4 className="text-small font-semibold leading-none">John Doe</h4>
+                        </div>
+                    </header>
+
+                    <div className="px-4 py-3">
+                        <textarea
+                            className="w-full p-2 h-16 focus:outline-none bg-white text-black placeholder:text-gray-700"
+                            placeholder="What do you think?"
+                            onChange={(e) => setCommentMsg(e.target.value)}
+                            value={commentMsg}
+                        ></textarea>
+                    </div>
+
+                    <div className="px-2 pt-2">
+                        <div className="flex justify-end p-4 border-t-2 border-t-gray-300">
+                            <Button
+                                isIconOnly
+                                radius="full"
+                                className="bg-orange-500 text-white hover:bg-orange-700 cursor-pointer"
+                                isDisabled={!commentMsg}
+                            >
+                                <SendHorizontal size={24} />
+                            </Button>
+                        </div>
+                    </div>
+
+                </article>
 
             </section>
         </div>

@@ -6,46 +6,9 @@ import { Spinner } from "@nextui-org/react"
 
 import { useUser } from "../context/UserContext"
 import Sidebar from "../components/Sidebar"
-import FeedBar from "../components/FeedBar"
 import PostCard from "../components/PostCard"
 import Post from "../components/Post"
 import Navbar from "../components/Navbar"
-//import ProfileCard from "../components/ProfileCard"
-
-/*
-const profiles = [
-    {
-        name: "John Doe",
-        avatar: "/images/baloon.jpg",
-        posts: 5
-    },
-    {
-        name: "Jane Doe",
-        avatar: "/images/honey.jpg",
-        posts: 10
-    },
-    {
-        name: "John Smith",
-        avatar: "/images/milk.jpg",
-        posts: 4
-    },
-    {
-        name: "Jim Felix",
-        avatar: "/images/baloon.jpg",
-        posts: 12
-    },
-    {
-        name: "James Pete",
-        avatar: "/images/honey.jpg",
-        posts: 1
-    },
-    {
-        name: "James Felix",
-        avatar: "/images/baloon.jpg",
-        posts: 0
-    }
-]
-*/
 
 const fetchUserFeed = async ({ pageParam }) => {
     //await new Promise((resolve) => setTimeout(resolve, 3000))
@@ -92,14 +55,11 @@ const Feed = () => {
                 </div>
                 {/* Feed column */}
                 <div className="w-full lg:w-1/3 p-6">
-                    <div className="flex justify-center items-center">
-                        <FeedBar />
-                    </div>
                     <div className="mt-4 sm:mt-10">
                         <PostCard />
                     </div>
                     {/* This is the main feed */}
-                    <div className="mt:10 sm:mt-16 p-4">
+                    <div className="mt-10 sm:mt-16 p-4">
                             {data.pages.map((page) => {
                                 return (
                                     <div key={page.currentPage} className="flex flex-col gap-2">

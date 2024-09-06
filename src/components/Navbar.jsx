@@ -1,28 +1,44 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { X, Menu, Bell, MessageCircleMore } from 'lucide-react'
+import { useMutation } from "@tanstack/react-query"
+import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom'
+import { X, Menu, Bell, MessageCircleMore, Sparkles } from 'lucide-react'
 import { Avatar, Badge, Popover, PopoverTrigger, PopoverContent } from '@nextui-org/react'
 
 import { useUser } from "../context/UserContext"
 import Sidebar from './Sidebar'
 
+const markAllRead = async (sentData) => {
+  const { data } = await axios.put(`http://localhost:5000/api/notifications/readAll`, sentData, { withCredentials: true })
+  return data
+}
+
 const Navbar = () => {
 
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
 
-  const { user, notifications, messageNotification } = useUser()
+  const { user, notifications, messageNotification, refetchNotifications } = useUser()
   console.log(notifications)
   const navigate = useNavigate()
 
   const toggleMobileDrawer = () => { 
     setMobileDrawerOpen(!mobileDrawerOpen)
   }
+  
+
+  const { mutate } = useMutation({
+    mutationFn: markAllRead,
+    onSuccess: (data) => console.log(data),
+    onError: (error) => console.log(`Error: ${error}`)
+  })
 
   const handleClick = () => {
+    refetchNotifications()
     navigate('/chat')
   }
 
   const handleRedirect = (notification) => {
+    refetchNotifications()
     switch (notification.type) {
       case "FollowNotification":
         navigate(`/profile/${notification.followerId._id}`)
@@ -39,12 +55,17 @@ const Navbar = () => {
     }
   }
 
+  const handleMarkAllRead = () => { 
+    refetchNotifications()
+    mutate({ userId: user._id })
+  }
+
   return (
     <div className='container relative sm:px-4 px-2 mx-auto lg:text-sm'>
       <div className='flex justify-between items-center'>
-        <div className='flex items-center flex-shrink-0'>
-          <p className='uppercase text-orange-500'>Logo</p>
-          <p className='text-orange-500'>LG Pic</p>
+        <div className="flex gap-2 items-center text-orange-300">
+              <Sparkles size={24} />
+              <span className="font-custom">ShowNext</span>
         </div>
 
         <div className='flex justify-end'>
@@ -62,11 +83,11 @@ const Navbar = () => {
                     </PopoverTrigger>
                     <PopoverContent>
                       {notifications?.length ? (
-                          notifications.map((notification) => (
+                          notifications.slice(0, 5).map((notification) => (
                             <div
                               key={notification._id}
                               onClick={() => handleRedirect(notification)}
-                              className="flex items-center p-2 border-b border-gray-200 gap-2 cursor-pointer hover:bg-slate-300 rounded-md truncate"
+                              className="w-[300px] grid grid-cols-custom items-center p-2 border-b border-gray-200 gap-2 cursor-pointer hover:bg-slate-300 rounded-md"
                             >
                               <Avatar
                                 src={notification?.followerId?.avatar || notification?.likerId?.avatar || notification?.commenterId?.avatar}
@@ -80,7 +101,15 @@ const Navbar = () => {
                             <div className="p-2">
                                 <p className="text-sm">No new notifications</p>
                             </div>
-                          )}
+                      )}
+                      <div className='grid grid-cols-customization items-center p-2 w-full'>
+                        <div className='flex justify-start'>
+                          <Link to='/notifications' className='text-sm text-blue-500 float-start'>See all</Link>
+                        </div>
+                        <div className={`flex justify-end ${notifications.length > 0 ? "" : "hidden"}`}>
+                          <span className='text-xs text-blue-500 float-end cursor-pointer' onClick={handleMarkAllRead}>Mark all as read</span>
+                        </div>                        
+                      </div>
                     </PopoverContent>
                   </Popover>
                 </Badge>
@@ -101,7 +130,7 @@ const Navbar = () => {
                             <div
                               key={notification._id}
                               onClick={handleClick}
-                              className="flex items-center justify-between p-2 border-b border-gray-200 gap-2 cursor-pointer hover:bg-slate-300 rounded-md"
+                              className="w-[300px] grid grid-cols-custom items-center p-2 border-b border-gray-200 gap-2 cursor-pointer hover:bg-slate-300 rounded-md"
                             >
                               <Avatar src={notification.avatar} alt='avatar' className='w-6 h-6' />
                               <p className="text-sm">{notification?.message}</p>

@@ -3,13 +3,13 @@ import {
     Telescope,
     MessageCircle,
     Cog,
-    Newspaper
+    Newspaper,
+    Bookmark
 } from "lucide-react"
 import { Image } from "@nextui-org/react"
 
 import { useUser } from "../context/UserContext"
 import SidebarCard from "./SidebarCard"
-import Logout from "./Logout"
 import { SearchModal } from "./SearchComps/SearchModal"
 
 const routes = [
@@ -32,6 +32,11 @@ const routes = [
         url: '/chat',
         name: 'Messenger',
         icon: <MessageCircle />
+    },
+    {
+        url: '/bookmark',
+        name: 'Bookmarks',
+        icon: <Bookmark />
     },
     {
         url: '/settings',
@@ -64,7 +69,6 @@ const Sidebar = () => {
                     />
                 ))}
             </div>
-            <Logout />
         </div>
     )
 }

@@ -23,7 +23,8 @@ export const Search = ({
             const { data } = await axios.get(url, {
                 params: {
                     username: queryText
-                }
+                },
+                withCredentials: true
             })
 
             setSearchResults(data);

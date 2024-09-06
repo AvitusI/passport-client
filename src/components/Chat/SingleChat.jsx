@@ -40,7 +40,7 @@ const SingleChat = () => {
             <Spinner size="large" />
         </div>
     ) : status === "error" ? (
-            <div className="h-full w-full flex items-center justify-center text-3xl text-black">
+            <div className="h-full w-full flex items-center justify-center text-3xl text-white">
                 {error.message}
             </div>
     ) : (

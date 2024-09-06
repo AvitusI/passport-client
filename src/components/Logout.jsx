@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { LogOut } from "lucide-react";
+import { Power } from "lucide-react";
 
 import { useUser } from "../context/UserContext";
 
-const Logout = () => {
+export const Logout = () => {
 
     const { updateUser } = useUser();
     const navigate = useNavigate()
@@ -30,14 +30,16 @@ const Logout = () => {
     }
 
     return (
-        <button
+        <div
             onClick={handleLogout}
-            className="flex justify-center items-center py-1 px-2 space-x-3 rounded-full bg-orange-500 text-white hover:bg-orange-700"
+            className="rounded-full p-6 bg-gray-800 cursor-pointer hover:bg-gray-700"
         >
-            <LogOut />
-            <span>Logout</span>
-        </button>
+            <div className="flex justify-start items-center gap-4">
+                <Power size={24} color="red" />
+                <span className="text-xl text-red-600">
+                    Logout
+                </span>
+            </div>
+        </div>
     )
 }
-
-export default Logout;

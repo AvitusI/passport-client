@@ -26,6 +26,10 @@ import RequestResetPassword from './pages/RequestResetPassword';
 import ResetPassword from './pages/ResetPassword';
 import Founder from './pages/Founder';
 import EditComment from './pages/EditComment';
+import Notifications from './pages/Notifications';
+import MessageNotifications from './pages/MessageNotifications';
+import Bookmark from './pages/Bookmark';
+import Settings from './pages/Settings';
 
 const App = () => {
   return (
@@ -51,6 +55,10 @@ const App = () => {
               <Route path='/edit/comment/:commentId' element={<EditComment />} />
               <Route path='/edit/user/:userId' element={<EditProfile />} />
               <Route path='/founder' element={<Founder />} />
+              <Route path='/notifications' element={<Notifications />} />
+              <Route path='/messageNotifications' element={<MessageNotifications />} />
+              <Route path='/settings' element={<Settings />} />
+              <Route path='/bookmark' element={<Bookmark />} />
           </Route>
         </Routes>
         </BrowserRouter>

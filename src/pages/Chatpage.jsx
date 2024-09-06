@@ -8,10 +8,10 @@ const Chatpage = () => {
   return (
       <div>
           <div>
-              <div className="h-screen relative flex flex-col bg-gray-50">
+              <div className="h-screen relative flex flex-col bg-black">
                   {/* Chat layout starts here */}
                   <div className="flex-grow w-full max-w-7xl mx-auto flex">
-                      <div className="flex-1 min-w-0 bg-white flex">
+                      <div className="flex-1 min-w-0 bg-black flex">
                           {/* Goes into MyCharts component */}
                           <MyChats />
 

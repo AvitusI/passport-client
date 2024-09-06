@@ -22,6 +22,7 @@ function ImageUploader({ imageUrl, onFieldChange, setFiles }) {
             'image/jpeg': [],
             'image/png': [],
         },
+        maxSize:  3  *  1024  *  1024
     })
 
   return (

@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from "yup"
 import axios from "axios"
 import { Button } from '@nextui-org/react'
-import { SpellCheck2 } from "lucide-react"
+import { Sparkles} from "lucide-react"
 
 import { toast } from "react-toastify"
 
@@ -44,8 +44,8 @@ const SignInComponent = () => {
       queryClient.invalidateQueries(['items'], { refetchActive: true })
       navigate('/feed')
     },
-    onError: () => {
-      toast.error("Incorrect credentials")
+    onError: (error) => {
+      toast.error(error.response.data.message)
     }
   })
 
@@ -59,8 +59,11 @@ const SignInComponent = () => {
           <div className="flex items-center">
               {/* login form */}
             <div className="flex flex-col items-center justify-center">
-                  <div className="w-[300px] max-w-[600px] flex justify-center items-center">
-                       <SpellCheck2 className="text-orange-500" />
+          <div className="w-[300px] max-w-[600px] flex justify-center items-center mt-2">
+            <div className="flex gap-2 items-center text-orange-300">
+              <Sparkles size={24} />
+              <span className="font-custom">ShowNext</span>
+            </div>                       
                   </div>
                   <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col  gap-4 w-full">
                       <input

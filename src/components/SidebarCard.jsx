@@ -1,12 +1,19 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
+
+const style = "flex p-2 rounded-md space-x-5 items-center text-orange-500 mb-2 hover:bg-orange-500 hover:text-white"
 
 const SidebarCard = ({ url, name, icon }) => {
   return (
-      <div className="flex p-2 rounded-md space-x-5 items-center text-orange-500 mb-2 hover:bg-orange-500 hover:text-white">
+    <NavLink
+      to={url}
+      className={({ isActive }) => isActive ? style + " bg-orange-500 text-white" : style}
+    >
           <div className="ml-16 mr-6">{icon}</div>
-          <Link to={url}>{ name }</Link>
-    </div>
+      <span>
+        {name}
+      </span>
+    </NavLink>
   )
 }
 

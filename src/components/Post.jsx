@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
-import { MessageSquareMore, Ellipsis, Bookmark } from "lucide-react"
+import { MessageSquareMore, Ellipsis } from "lucide-react"
 import {
   Avatar,
   Button,
@@ -12,28 +12,32 @@ import {
   PopoverTrigger,
   PopoverContent,
   Modal,
-    ModalHeader,
-    ModalContent,
-    ModalBody,
-    ModalFooter,
-    useDisclosure,
-    Image
+  ModalHeader,
+  ModalContent,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  Image
 } from "@nextui-org/react"
 
 import { useUser } from "../context/UserContext"
 import LikeButton from "./LikeButton"
+import BookmarkButton from "./BookmarkButton"
 import ListDetails from "./ListDetails"
 import { queryClient } from "../main"
 import { formatTimeDifference } from "../utils/formatTime"
 
 const Post = ({ post }) => {
 
-  const { user } = useUser()
+  const { user, refetchNotifications } = useUser()
 
   const likeStatus = post.likes.some((like) => like._id === user._id)
   const isAuthor = post.author._id === user._id
+  const bookmarkedStatus = user.bookmarks.some((bookmark) => bookmark._id === post._id)
 
   const [liked, setLiked] = useState(likeStatus)
+  const [bookmarked, setBookmarked] = useState(bookmarkedStatus)
+
 
   const { isOpen, onOpen, onOpenChange} = useDisclosure()
 
@@ -53,10 +57,21 @@ const Post = ({ post }) => {
     return data
   }
 
+  const sendBookmark = async () => {
+    if (bookmarkedStatus) {
+      const { data } = await axios.post(`http://localhost:5000/api/posts/unbookmark/${post._id}`, {}, { withCredentials: true })
+      return data
+    }
+    else {
+      const { data } = await axios.post(`http://localhost:5000/api/posts/bookmark/${post._id}`, {}, { withCredentials: true })
+      return data
+    }
+  }
+
   const { mutate: mutateLike, isPending } = useMutation({
     mutationFn: sendLike,
     onSuccess: () => {
-      setLiked(!liked)
+      refetchNotifications()
       queryClient.invalidateQueries(['items'], { refetchActive: true })
     },
     onError: () => { 
@@ -74,12 +89,29 @@ const Post = ({ post }) => {
     }
   })
 
+  const { mutate: mutateBookmark, isPending: pendingBookmarked } = useMutation({
+    mutationFn: sendBookmark,
+    onSuccess: () => {
+      refetchNotifications()
+      queryClient.invalidateQueries(['items'], { refetchActive: true })
+    },
+    onError: (error) => {
+      toast.error(error.response.data.message)
+    }
+  })
+
   const likeAction = () => {
+    setLiked(!liked)
     mutateLike({ id: post._id })
   }
 
   const deleteAction = () => { 
     mutateDelete()
+  }
+
+  const bookmarkAction = () => { 
+    setBookmarked(!bookmarked)
+    mutateBookmark()
   }
 
   return (
@@ -165,7 +197,7 @@ const Post = ({ post }) => {
                             </div>
                             <div className="flex justify-center items-center">
                                 <div>
-                                    <Bookmark size={16} />
+                                    <BookmarkButton bookmarked={bookmarked} action={bookmarkAction} isPending={pendingBookmarked} />
                                 </div>
                             </div>
                         </div>

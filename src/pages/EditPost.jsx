@@ -15,7 +15,7 @@ const EditPost = () => {
   
   const { postId } = useParams()
 
-  const { data: post, status, error } = useQuery({
+  const { data: post, status } = useQuery({
       queryKey: ["post", postId],
       queryFn: fetchPost
    })
@@ -26,7 +26,7 @@ const EditPost = () => {
         </div>
   ) : status === "error" ? (
       <div className="h-screen w-screen flex justify-center items-center">
-                <h1 className="text-3xl text-white text-center">An Error Occured: { error.message}</h1>
+                <h1 className="text-xl text-white text-center">Something strange occured. Try refreshing the page</h1>
             </div>
     ) : (
     <EditPostComp post={post} />

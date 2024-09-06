@@ -6,7 +6,7 @@ import * as yup from "yup"
 import axios from "axios"
 import { toast } from "react-toastify"
 import { Button } from "@nextui-org/react"
-import { SpellCheck2 } from "lucide-react"
+import { Sparkles } from "lucide-react"
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -53,8 +53,11 @@ const SignUpComponent = () => {
               {/* login form */}
             <div className="flex flex-col items-center justify-center">
           
-                  <div className="w-[300px] max-w-[600px] flex justify-center items-center">
-                       <SpellCheck2 className="text-orange-500" />
+                  <div className="w-[300px] max-w-[600px] flex justify-center items-center mt-2">
+                       <div className="flex gap-2 items-center text-orange-300">
+                          <Sparkles size={24} />
+                        <span className="font-custom">ShowNext</span>
+                      </div>
                   </div>
 
                   <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col  gap-4 w-full">
