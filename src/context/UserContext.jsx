@@ -7,6 +7,7 @@ import {
     useState
 } from "react";
 
+import { socket } from "../utils";
 import { groupByUser, transformNotification } from "../utils/messageNotification";
 
 const UserContext = createContext();
@@ -32,6 +33,9 @@ const UserProvider = props => {
                 });
                 const userData = await result.json();
                 setUser(userData);
+                if (userData) {
+                    socket.emit("join_notifications", userData._id);
+                }
 
                 const msgNotification = await fetch(`http://localhost:5000/api/messagenotify/${userData._id}`, {
                     credentials: "include",
@@ -60,7 +64,10 @@ const UserProvider = props => {
             }
         };
         fetchData();
-    }, [selectedChat, setSelectedChat, refetchFlag])
+
+        () => { socket.off("notification").on("notification", (notification) => { setNotifications([notification, ...notifications]) }) }
+
+    }, [selectedChat, setSelectedChat, refetchFlag, notifications])
 
     const updateUser = user => {
         setUser(user);

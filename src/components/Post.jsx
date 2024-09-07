@@ -26,6 +26,7 @@ import BookmarkButton from "./BookmarkButton"
 import ListDetails from "./ListDetails"
 import { queryClient } from "../main"
 import { formatTimeDifference } from "../utils/formatTime"
+import { socket } from "../utils"
 
 const Post = ({ post }) => {
 
@@ -37,7 +38,6 @@ const Post = ({ post }) => {
 
   const [liked, setLiked] = useState(likeStatus)
   const [bookmarked, setBookmarked] = useState(bookmarkedStatus)
-
 
   const { isOpen, onOpen, onOpenChange} = useDisclosure()
 
@@ -68,10 +68,16 @@ const Post = ({ post }) => {
     }
   }
 
+  const awaitNotification = () => {
+    setTimeout(() => { socket.emit("new_notification") }, 1000)
+  }
+
   const { mutate: mutateLike, isPending } = useMutation({
     mutationFn: sendLike,
     onSuccess: () => {
-      refetchNotifications()
+      if (liked) {
+        awaitNotification()
+      }
       queryClient.invalidateQueries(['items'], { refetchActive: true })
     },
     onError: () => { 
