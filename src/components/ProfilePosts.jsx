@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect } from "react"
 import { useInfiniteQuery } from "@tanstack/react-query"
+import { Link } from "react-router-dom"
 import axios from "axios" 
 import { useInView } from "react-intersection-observer"
 import { Avatar, Spinner } from "@nextui-org/react"
@@ -43,10 +44,12 @@ const ProfilePosts = ({ userId }) => {
               <div key={page.currentPage} className="flex flex-col gap-2">
                 {page.items.length > 0 ? page.items.map((post) => {
                   return (
-                    <div key={post._id} className="flex justify-start gap-3 rounded-md bg-white text-black mb-3 p-4">
-                      <Avatar src={post.author.avatar} alt="avatar" />
-                      <p className="font-light text-sm truncate">{post.content}</p>
-                    </div>
+                    <Link key={post._id} to={`/post/${post._id}`}>
+                      <div className="grid grid-cols-custom items-center rounded-lg  bg-gray-900 hover:bg-gray-800 text-gray-200 mb-3 p-4 cursor-pointer">
+                        <Avatar src={post.author.avatar} size="sm" alt="avatar" />
+                        <p className="font-light text-sm truncate">{post.content}</p>
+                      </div>
+                    </Link>
                   )
                 }) : <div>
                     <p className="text-lg text-center text-white pt-6">

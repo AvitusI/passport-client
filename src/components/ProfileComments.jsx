@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect } from "react"
+import { Link } from "react-router-dom"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import axios from "axios" 
 import { useInView } from "react-intersection-observer"
@@ -44,10 +45,12 @@ const ProfileComments = ({ userId }) => {
               <div key={page.currentPage} className="flex flex-col gap-2">
                 {page.items.length > 0 ? page.items.map((comment) => {
                   return (
-                    <div key={comment._id} className="flex justify-start gap-3 rounded-md bg-white text-black mb-3 p-4">
-                      <Avatar src={comment.userId.avatar} alt="avatar" />
+                    <Link key={comment._id} to={`/post/${comment.postId}`}>
+                    <div className="grid grid-cols-custom items-center bg-gray-900 text-gray-200 mb-3 p-4 rounded-lg cursor-pointer">
+                      <Avatar src={comment.userId.avatar} size="sm" alt="avatar" />
                       <p className="font-light text-sm truncate">{comment.content}</p>
-                    </div>
+                      </div>
+                    </Link>
                   )
                 }) : <div>
                     <p className="text-lg text-center text-white pt-6">

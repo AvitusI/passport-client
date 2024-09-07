@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { Logout } from "../components/Logout"
@@ -23,11 +25,13 @@ export default function Settings() {
                     <div className="grid grid-rows-4 gap-6 sm:gap-10 p-2">
                         <TwoFactor />
                         <Change />
-                        <div className="rounded-full bg-gray-800 text-gray-100 p-6">
-                            <span className="text-xl">
-                                About the Dev
-                            </span>
-                        </div>
+                        <Link to="/founder">
+                            <div className="rounded-full bg-gray-900 text-gray-100 p-6 hover:bg-gray-700">
+                                <span className="text-xl">
+                                    About the Dev
+                                </span>
+                            </div>
+                        </Link>
                         <Logout />
                     </div>
                 </div>

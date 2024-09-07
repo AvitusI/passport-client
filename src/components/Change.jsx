@@ -42,7 +42,7 @@ export const Change = () => {
 
     return (
         <div
-            className="rounded-full bg-gray-800 text-gray-100 p-6 cursor-pointer hover:bg-gray-700"
+            className="rounded-full bg-gray-900 text-gray-100 p-6 cursor-pointer hover:bg-gray-700"
             onClick={onOpen}
         >
             <span className="text-xl">

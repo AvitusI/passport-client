@@ -32,11 +32,11 @@ export const Logout = () => {
     return (
         <div
             onClick={handleLogout}
-            className="rounded-full p-6 bg-gray-800 cursor-pointer hover:bg-gray-700"
+            className="rounded-full p-6 bg-gray-900 cursor-pointer hover:bg-gray-700"
         >
             <div className="flex justify-start items-center gap-4">
                 <Power size={24} color="red" />
-                <span className="text-xl text-red-600">
+                <span className="text-xl text-red-600 hover:bg-red-700">
                     Logout
                 </span>
             </div>

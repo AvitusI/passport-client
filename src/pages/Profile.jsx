@@ -51,6 +51,10 @@ const Profile = () => {
 
     const commonFollowers = getCommonFollowers(user?.followers, data?.followers)
 
+    const isSameUser = user?._id === data?._id
+    
+    console.log(isSameUser)
+
     console.log(`data: ${getFollowersByProfileSummary(user, data)}`);
 
     const { mutate } = useMutation({
@@ -115,7 +119,7 @@ const Profile = () => {
                             </div>
                         </div>
 
-                        <div className="p-0">
+                        <div className={`p-0 ${isSameUser ? "hidden" : ""}`}>
                             <div
                                 className="text-default-500 flex gap-2 flex-1 items-center cursor-pointer"
                                 onClick={onOpen}

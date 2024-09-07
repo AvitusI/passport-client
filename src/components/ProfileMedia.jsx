@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { Link } from "react-router-dom"
-import { Spinner } from "@nextui-org/react"
+import { Spinner, Image } from "@nextui-org/react"
 
 const retrieveMedia = async ({ queryKey }) => {
   const [,userId] = queryKey
@@ -28,10 +28,10 @@ const ProfileMedia = ({ userId }) => {
     ) : (
         <div className="w-full h-full p-4">
           {data.length > 0 ? (
-            <div className="mx-auto my-10 columns-3 space-y-4">
+            <div className="mx-auto my-2 grid grid-cols-3 gap-2">
               {data.map((img) => (
                 <Link key={img._id} to={`/post/${img._id}`}>
-                  <img className="aspect-square w-full object-cover rounded-md" src={img.pic} alt="img" />
+                  <Image className="aspect-square w-full object-cover rounded-md" src={img.pic} alt="img" />
                 </Link>
               ))}
             </div>

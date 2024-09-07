@@ -23,7 +23,7 @@ export const TwoFactor = () => {
     }
 
     return (
-        <div className="flex justify-between items-start rounded-full bg-gray-800 text-gray-100 p-6">
+        <div className="flex justify-between items-start rounded-full bg-gray-900 text-gray-100 hover:bg-gray-700 p-6">
             <span className="text-xl">
                 Enable 2FA
             </span>

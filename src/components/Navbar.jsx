@@ -13,6 +13,11 @@ const markAllRead = async (sentData) => {
   return data
 }
 
+const markAsRead = async (sentData) => { 
+    const { data } = await axios.put(`http://localhost:5000/api/notifications/`, sentData,{ withCredentials: true })
+    return data
+}
+
 const Navbar = () => {
 
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
@@ -32,12 +37,17 @@ const Navbar = () => {
     onError: (error) => console.log(`Error: ${error}`)
   })
 
+  const { mutate: mutateRead } = useMutation({
+        mutationFn: markAsRead,
+    })
+
   const handleClick = () => {
     refetchNotifications()
     navigate('/chat')
   }
 
   const handleRedirect = (notification) => {
+    mutateRead({ id: notification._id })
     refetchNotifications()
     switch (notification.type) {
       case "FollowNotification":
