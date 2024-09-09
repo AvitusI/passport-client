@@ -4,7 +4,8 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 import { Link } from "react-router-dom"
 import axios from "axios" 
 import { useInView } from "react-intersection-observer"
-import { Avatar, Spinner } from "@nextui-org/react"
+import { Avatar } from "@nextui-org/react"
+import { PuffLoader, ClipLoader } from "react-spinners"
 
 const fetchProfilePosts = async ({ queryKey, pageParam }) => {
   const [, userId] = queryKey
@@ -16,7 +17,7 @@ const ProfilePosts = ({ userId }) => {
 
   const { ref, inView } = useInView()
   
-  const { data, error, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+  const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
         queryKey: ['profilePosts', userId],
         queryFn: fetchProfilePosts,
         initialPageParam: 0,
@@ -31,11 +32,16 @@ const ProfilePosts = ({ userId }) => {
   
   return status === "pending" ? (
     <div className="h-full w-full flex justify-center items-center">
-      <Spinner size="lg" className="mt-4" />
+          <div className="flex flex-col gap-2 items-center">
+                <PuffLoader color="orange" />
+                <span className="text-sm">Fetching posts...</span>
+            </div>
     </div>
   ) : status === "error" ? (
       <div className="h-full w-full flex justify-center items-center">
-        <h1 className="text-2xl text-white text-center">An Error Occured: {error.message}</h1>
+        <h1 className="text-2xl text-white text-center">
+          Network error occured. Try refreshing the page.
+        </h1>
       </div>
     ) : (
         <div className="h-full w-full p-4">
@@ -63,7 +69,7 @@ const ProfilePosts = ({ userId }) => {
 
           <div ref={ref} className="flex justify-center items-center">
             {isFetchingNextPage && 
-              <Spinner size="lg" />
+              <ClipLoader color="orange" />
             }
           </div>
         </div>

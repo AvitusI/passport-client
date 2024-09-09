@@ -2,7 +2,8 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { Link } from "react-router-dom"
-import { Spinner, Image } from "@nextui-org/react"
+import { Image } from "@nextui-org/react"
+import { PuffLoader } from "react-spinners"
 
 const retrieveMedia = async ({ queryKey }) => {
   const [,userId] = queryKey
@@ -12,18 +13,23 @@ const retrieveMedia = async ({ queryKey }) => {
 
 const ProfileMedia = ({ userId }) => {
 
-  const { data, error, status } = useQuery({
+  const { data, status } = useQuery({
     queryKey: ['profileMedia', userId],
     queryFn: retrieveMedia
   })
   
   return status === "pending" ? (
     <div className="h-full w-full flex justify-center items-center">
-      <Spinner size="lg" className="mt-4" />
+          <div className="flex flex-col gap-2 items-center">
+                <PuffLoader color="orange" />
+                <span className="text-sm">Fetching media...</span>
+            </div>
     </div>
   ) : status === "error" ? (
       <div className="h-full w-full flex justify-center items-center">
-        <h1 className="text-2xl text-white text-center">An Error Occured: {error.message}</h1>
+        <h1 className="text-2xl text-white text-center">
+          Network error occured. Try refreshing the page.
+        </h1>
       </div>
     ) : (
         <div className="w-full h-full p-4">

@@ -1,32 +1,35 @@
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios"; 
+import { toast } from "react-toastify";
 import { Power } from "lucide-react";
 
 import { useUser } from "../context/UserContext";
 
+const logout = async () => {
+    const { data } = await axios.post("http://localhost:5000/api/auth/logout", {},  { withCredentials: true })
+    return data
+}
+
 export const Logout = () => {
 
-    const { updateUser } = useUser();
-    const navigate = useNavigate()
+    const { updateUser } = useUser()
 
-    const handleLogout = async () => {
-        try {
-            const result = await fetch('http://localhost:5000/api/auth/logout', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    accept: 'application/json'
-                }
-            })
-            
-            if (result.status === 200) {
-                updateUser(null)
-                navigate('/', { replace: true })
-            } else {
-                console.error('Logout failed')
-            }
-        } catch (error) {
-            console.error(error)
+    const navigate = useNavigate()
+    
+    const { mutate } = useMutation({
+        mutationFn: logout,
+        onSuccess: () => {
+            updateUser(null)
+            navigate("/", { replace:  true  })
+        },
+        onError: (error) => {
+            toast.error(error.response.data.message)
         }
+    })
+
+    const handleLogout = () => {
+        mutate()
     }
 
     return (

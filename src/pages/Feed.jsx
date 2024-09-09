@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useInView } from "react-intersection-observer"
-import { Spinner } from "@nextui-org/react"
+import { RingLoader, ClipLoader } from "react-spinners"
 
 import { useUser } from "../context/UserContext"
 import Sidebar from "../components/Sidebar"
@@ -22,7 +22,7 @@ const Feed = () => {
     const { user } = useUser()
     const { ref, inView } = useInView()
 
-    const { data, error, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+    const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
         queryKey: ['items'],
         queryFn: fetchUserFeed,
         initialPageParam: 0,
@@ -36,12 +36,15 @@ const Feed = () => {
     }, [inView, fetchNextPage, user])
 
     return status === 'pending' ? (
-        <div className="h-screen w-screen flex justify-center items-center">
-            <Spinner size="lg" />
+        <div className="h-screen flex items-center justify-center">
+            <div className="flex flex-col gap-2 items-center">
+                <RingLoader color="orange" />
+                <span className="text-xl">Just a moment...</span>
+            </div>
         </div>
     ) : status === 'error' ? (
             <div className="h-screen w-screen flex justify-center items-center">
-                <h1 className="text-3xl text-white text-center">An Error Occured: {error.message}</h1>
+                <h1 className="text-3xl text-white text-center">Network error occured. Try refreshing the page.</h1>
             </div>
     ) :  (
       <>
@@ -79,7 +82,7 @@ const Feed = () => {
                                 
                                 <div ref={ref} className="flex justify-center items-center">
                                     {isFetchingNextPage &&
-                                        <Spinner size="lg" />
+                                        <ClipLoader color="orange" />
                                     }
                             </div>
                             </div>

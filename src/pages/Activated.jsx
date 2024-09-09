@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useSearchParams } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
-import { Spinner } from "@nextui-org/react"
+import { RingLoader } from "react-spinners"
 
 import { useUser } from "../context/UserContext"
 import ActivatedCard from "../components/ActivatedCard"
@@ -44,7 +44,12 @@ const Activated = () => {
 
   return (
       <div className="h-screen w-screen p-4 flex items-center justify-center">
-          { isPending ? <Spinner size="lg"/> : ( <ActivatedCard />) }
+      {isPending ? (
+        <div className="flex flex-col gap-2 items-center">
+              <RingLoader color="orange" />
+              <span className="text-xl">Just a moment...</span>
+          </div>
+      ) : (<ActivatedCard />)}
     </div>
   )
 }

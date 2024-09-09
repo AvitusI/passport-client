@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"
 import { SearchIcon, CircleChevronLeft } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { Avatar, Button, Spinner } from "@nextui-org/react"
+import { Avatar, Button } from "@nextui-org/react"
+import { RingLoader } from "react-spinners"
 
 import { useUser } from "../../context/UserContext"
 import UserChat from "./UserChat"
@@ -22,18 +23,21 @@ const MyChats = () => {
 
     const { user, selectedChat } = useUser()
 
-    const { data: chats , status, error } = useQuery({
+    const { data: chats , status } = useQuery({
         queryKey: ["chats"],
         queryFn: fetchChats
     })
 
     return status === "pending" ? (
-        <div className="flex items-center justify-center">
-            <Spinner size="large" />
+        <div className="h-screen flex items-center justify-center">
+            <div className="flex flex-col gap-2 items-center">
+                <RingLoader color="orange" />
+                <span className="text-xl">Just a moment...</span>
+            </div>
         </div>
     ) : status === "error" ? (
-            <div className="flex items-center justify-center text-3xl text-black">
-                {error.message}
+            <div className="flex items-center justify-center text-xl text-black">
+                <span>Network error occured. Try refreshing the page.</span>
             </div>
     ) : (
       <div className={`bg-black border-b border-gray-200 xl:border-b-0 xl:flex-shrink-0 xl:border-r xl:border-gray-200 w-full ${selectedChat ? "hidden sm:block sm:w-1/3" : "block sm:w-1/3"}`}>

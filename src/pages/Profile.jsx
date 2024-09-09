@@ -1,8 +1,8 @@
 import { useParams, useNavigate, Link } from "react-router-dom"
 import axios from "axios"
 import { useQuery, useMutation } from "@tanstack/react-query"
+import { RingLoader } from "react-spinners"
 import {
-    Spinner,
     Button,
     Tabs,
     Tab,
@@ -44,7 +44,7 @@ const Profile = () => {
     const navigate  = useNavigate();
     const { user, setSelectedChat } = useUser();
 
-    const { data , status, error } = useQuery({
+    const { data , status } = useQuery({
         queryKey: ["user", userId],
         queryFn: fetchUser
     })
@@ -69,12 +69,17 @@ const Profile = () => {
     })
 
     return status === 'pending' ? (
-        <div className="h-screen w-screen flex justify-center items-center">
-            <Spinner size="lg" />
+        <div className="h-screen flex items-center justify-center">
+            <div className="flex flex-col gap-2 items-center">
+                <RingLoader color="orange" />
+                <span className="text-xl">Just a moment...</span>
+            </div>
         </div>
     ) : status === 'error' ? (
             <div className="h-screen w-screen flex justify-center items-center">
-                <h1 className="text-3xl text-white text-center">An Error Occured: { error.message}</h1>
+                <h1 className="text-3xl text-white text-center">
+                    Network error occured. Try refreshing the page.
+                </h1>
             </div>
     ) : (
       <>

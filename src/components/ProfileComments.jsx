@@ -4,7 +4,8 @@ import { Link } from "react-router-dom"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import axios from "axios" 
 import { useInView } from "react-intersection-observer"
-import { Avatar, Spinner } from "@nextui-org/react"
+import { Avatar } from "@nextui-org/react"
+import { PuffLoader, ClipLoader } from "react-spinners"
 
 const fetchProfileComments = async ({ queryKey, pageParam }) => {
   const [, userId] = queryKey
@@ -32,7 +33,10 @@ const ProfileComments = ({ userId }) => {
   
   return status === "pending" ? (
     <div className="h-full w-full flex justify-center items-center">
-      <Spinner size="lg" className="mt-4" />
+          <div className="flex flex-col gap-2 items-center">
+                <PuffLoader color="orange" />
+                <span className="text-sm">Fetching comments...</span>
+            </div>
     </div>
   ) : status === "error" ? (
       <div className="h-full w-full flex justify-center items-center">
@@ -64,7 +68,7 @@ const ProfileComments = ({ userId }) => {
 
           <div ref={ref} className="flex justify-center items-center">
             {isFetchingNextPage && 
-              <Spinner size="lg" />
+              <ClipLoader color="orange" />
             }
           </div>
         </div>

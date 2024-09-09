@@ -1,7 +1,7 @@
 import ScrollableFeed from "react-scrollable-feed"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { Spinner } from "@nextui-org/react"
+import { PuffLoader } from "react-spinners";
 
 import Message from "./Message";
 import { useUser } from "../../context/UserContext"
@@ -22,7 +22,7 @@ const SingleChat = () => {
 
     const chatId = selectedChat._id
 
-    const { data, status, error, isSuccess } = useQuery({
+    const { data, status, isSuccess } = useQuery({
         queryKey: ["messages-fetched", chatId],
         queryFn: fetchMessages,
     })
@@ -37,11 +37,14 @@ const SingleChat = () => {
 
     return status === "pending" ? (
         <div className="h-full w-full flex items-center justify-center">
-            <Spinner size="large" />
+            <div className="flex flex-col gap-2 items-center">
+                <PuffLoader color="orange" />
+                <span className="text-sm">Fetching messages...</span>
+            </div>
         </div>
     ) : status === "error" ? (
-            <div className="h-full w-full flex items-center justify-center text-3xl text-white">
-                {error.message}
+            <div className="h-full w-full flex items-center justify-center text-xl text-white">
+                <span>Network error occured. Try refreshing the page.</span>
             </div>
     ) : (
             <ScrollableFeed
