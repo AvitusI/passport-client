@@ -20,7 +20,7 @@ export const Logout = () => {
             
             if (result.status === 200) {
                 updateUser(null)
-                navigate('/')
+                navigate('/', { replace: true })
             } else {
                 console.error('Logout failed')
             }

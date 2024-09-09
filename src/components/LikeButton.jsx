@@ -2,7 +2,7 @@
 import { Button } from "@nextui-org/react"
 import { HeartIcon } from "lucide-react"
 
-const LikeButton = ({ liked, action, isPending }) => {
+const LikeButton = ({ liked, action, isPending, isReply }) => {
 
   return (
     <Button
@@ -16,7 +16,7 @@ const LikeButton = ({ liked, action, isPending }) => {
       <HeartIcon
         className={liked ? "[&>path]:stroke-transparent" : ""}
         fill={liked ? "currentColor" : "none"}
-        size={20}
+        size={`${isReply ? 16 : 20}`}
       />
     </Button>
   )

@@ -83,7 +83,7 @@ const Comment = ({ comment }) => {
   }
 
   return (
-    <div className="flex gap-2 p-2 mb-2 sm:mb-4 items-start">
+    <div className="flex gap-2 p-2 mb-2 sm:mb-4 items-start max-w-[400px]">
           <div className="flex-1">
             <Avatar src={comment.userId.avatar} alt="avatar" size="sm" />
           </div>

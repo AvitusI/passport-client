@@ -3,18 +3,19 @@ import { useState } from "react"
 import { useQuery, useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { toast } from "react-toastify"
-import { Heart, Reply, SendHorizontal, Trash2 } from "lucide-react"
+import { Heart, Reply, SendHorizontal } from "lucide-react"
 import {
     Modal,
     ModalContent,
     ModalBody,
     useDisclosure,
     Avatar,
-    Button,
 } from "@nextui-org/react"
 
+import { socket } from "../utils"
 import { queryClient } from "../main"
 import { formatTimeDifference } from "../utils/formatTime"
+import { ReplyComp } from "./ReplyComp"
 
 const fetchReplies = async ({ queryKey }) => {
     const [, commentId] = queryKey
@@ -27,12 +28,6 @@ const replyComment = async (sentData) => {
     return data
 }
  
-const deleteReply = async (sentData) => { 
-    // Axios handles delete requests differently from other requests
-    const { data } = await axios.delete("http://localhost:5000/api/reply/delete",  { data: sentData, withCredentials: true })
-    return data
-}
-
 export const CommentReplyComp = ({
     comment
 }) => {
@@ -48,24 +43,18 @@ export const CommentReplyComp = ({
         queryFn: fetchReplies,
     })
 
+    const awaitNotification = () => {
+        setTimeout(() => { socket.emit("new_notification") }, 1000)
+    }
+
     const { mutate: mutateReply } = useMutation({
         mutationFn: replyComment,
         onSuccess: () => {
+            awaitNotification()
             queryClient.invalidateQueries(["replies", commentId], { refetchActive: true })
         },
         onError: () => {
             toast.error("Failed to add reply")
-        }
-    })
-
-    const { mutate: mutateDelete, isPending } = useMutation({
-        mutationFn: deleteReply,
-        onSuccess: () => {
-            queryClient.invalidateQueries(["replies", commentId], { refetchActive: true })
-        },
-        onError: (error) => {
-            console.log(error)
-            toast.error("Failed to delete reply")
         }
     })
 
@@ -123,39 +112,7 @@ export const CommentReplyComp = ({
                                     : (
                                         <div className="flex-1 overflow-y-auto max-h-[300px]">
                                             {data.map((reply) => (
-                                                <div key={reply._id} className="p-4">
-                                                    <div className="flex justify-start gap-4">
-                                                        <div className="flex-1">
-                                                            <Avatar src={reply.userId.avatar} alt="avatar" size="sm"/>
-                                                        </div>
-                                                        <div className="flex flex-col gap-4 w-full pt-2">
-                                                            <div className="flex justify-between items-center">
-                                                                <span className="text-sm font-semibold leading-none text-default-800">
-                                                                    {reply.userId.username}
-                                                                </span>
-                                                                <span className="text-xs italic text-default-800">{formatTimeDifference(new Date(reply.createdAt))}</span>
-                                                            </div>
-                                                            <p className="text-sm">{reply.content}</p>
-                                                            <div className="grid grid-cols-2">
-                                                                <div className="flex justify-center items-center gap-2">
-                                                                    <span>{reply?.likes.length > 0 ? reply?.likes.length : null}</span>
-                                                                    <Heart size={16} fill="red" />
-                                                                </div>
-                                                                <div className="flex justify-center items-center">
-                                                                    <Button
-                                                                        isIconOnly
-                                                                        className="text-orange-500 hover:text-white bg-white hover:bg-orange-500"
-                                                                        radius="full"
-                                                                        isDisabled={isPending}
-                                                                        onClick={() => mutateDelete({ id: reply._id })}
-                                                                    >
-                                                                        <Trash2 size={16} />
-                                                                    </Button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <ReplyComp key={reply._id} reply={reply} />
                                             ))}
                                         </div>
                                     )}

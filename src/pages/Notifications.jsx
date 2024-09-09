@@ -47,9 +47,15 @@ export default function Notifications() {
             case "LikeCommentNotification":
                 navigate(`/post/${notification.commentId.postId}`)
                 break;
+            case "LikeReplyNotification":
+                navigate(`/post/${notification.replyId.commentId.postId}`)
+                break;
             case "CommentNotification":
                 navigate(`/post/${notification.postId}`)
                 break;
+            case "ReplyNotification":
+                navigate(`/post/${notification.commentId.postId}`)
+                break; 
         }
   }
 

@@ -7,6 +7,7 @@ import { Avatar, Button } from "@nextui-org/react"
 import {  SendHorizontal } from "lucide-react" 
 
 import { useUser } from "../context/UserContext"
+import { socket } from "../utils"
 import { queryClient } from "../main"
 
 const CommentCard = ({ postId }) => {
@@ -22,11 +23,16 @@ const CommentCard = ({ postId }) => {
         { withCredentials: true }
     )
     return response.data
-}
+  }
+  
+  const awaitNotification = () => {
+    setTimeout(() => { socket.emit("new_notification") }, 1000)
+  }
 
   const { mutate, isPending } = useMutation({
     mutationFn: sendComment,
     onSuccess: () => {
+      awaitNotification()
       queryClient.invalidateQueries(['post', postId], { refetchActive: true })
     },
     onError: (error) => {

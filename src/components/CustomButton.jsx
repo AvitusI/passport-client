@@ -6,6 +6,7 @@ import { Button } from "@nextui-org/react";
 
 import { useUser } from "../context/UserContext";
 import { queryClient } from "../main";
+import { socket } from "../utils";
 
 
 const CustomButton = ({ data }) => {
@@ -27,9 +28,16 @@ const CustomButton = ({ data }) => {
         }
     }
 
+    const awaitNotification = () => {
+        setTimeout(() => { socket.emit("new_notification") }, 1000)
+    }
+
     const { mutate, isPending } = useMutation({
         mutationFn: sendFollowData,
         onSuccess: () => {
+            if (isFollowed) {
+                awaitNotification()
+            }
             setIsFollowed(!isFollowed)
             queryClient.invalidateQueries(["user", data._id])
         },
