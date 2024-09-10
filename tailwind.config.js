@@ -21,6 +21,7 @@ export default {
       },
       fontFamily: {
         custom: ['Playwrite CU'],
+        customized: ['Nerko One'],
       },
     },
   },

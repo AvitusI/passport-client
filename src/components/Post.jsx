@@ -72,7 +72,7 @@ const Post = ({ post }) => {
     setTimeout(() => { socket.emit("new_notification") }, 1000)
   }
 
-  const { mutate: mutateLike, isPending } = useMutation({
+  const { mutate: mutateLike } = useMutation({
     mutationFn: sendLike,
     onSuccess: () => {
       if (liked) {
@@ -184,14 +184,14 @@ const Post = ({ post }) => {
                       )}
 
                     <div className="px-2 pt-2">
-                        <div className="grid grid-cols-3 items-center p-4 border-b-2 border-t-2 border-b-gray-300 border-t-gray-300">
-                            <div className="border-r-2 border-r-gray-300 flex justify-center items-center">
+                          <div className={`grid grid-cols-3 items-center p-4 ${post.pic ? "" : "border-t-2 border-t-gray-300"}`}>
+                            <div className="flex justify-center items-center">
                                 <div className="flex justify-center items-center gap-2">
                                     <p className="text-sm font-bold">{post.likes.length > 0 ? post.likes.length : null}</p>
-                                    <LikeButton liked={liked} action={likeAction} isPending={isPending} />
+                                    <LikeButton liked={liked} action={likeAction} />
                                 </div>
                             </div>
-                            <div className="border-r-2 border-r-gray-300 flex justify-center">
+                            <div className="flex justify-center">
                                 <Link to={`/post/${post._id}`}>
                                   <div className="flex justify-center items-center gap-2">
                                       <p className="text-xs font-bold">

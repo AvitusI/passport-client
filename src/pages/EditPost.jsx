@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
-import { Spinner } from "@nextui-org/react"
+import { RingLoader } from "react-spinners"
 import EditPostComp from "../components/PostUploadComps/EditPostComp"
 
 
@@ -22,11 +22,14 @@ const EditPost = () => {
 
   return status === "pending" ? (
     <div className="h-screen w-screen flex justify-center items-center">
-            <Spinner size="lg" />
-        </div>
+      <div className="flex flex-col gap-2 items-center">
+          <RingLoader color="orange" />
+          <span className="text-xl">Just a moment...</span>
+      </div>
+    </div>
   ) : status === "error" ? (
       <div className="h-screen w-screen flex justify-center items-center">
-                <h1 className="text-xl text-white text-center">Something strange occured. Try refreshing the page</h1>
+                <h1 className="text-xl text-white text-center">Network error occured. Try refreshing the page</h1>
             </div>
     ) : (
     <EditPostComp post={post} />

@@ -30,6 +30,7 @@ import Notifications from './pages/Notifications';
 import MessageNotifications from './pages/MessageNotifications';
 import Bookmark from './pages/Bookmark';
 import Settings from './pages/Settings';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
@@ -59,7 +60,9 @@ const App = () => {
               <Route path='/messageNotifications' element={<MessageNotifications />} />
               <Route path='/settings' element={<Settings />} />
               <Route path='/bookmark' element={<Bookmark />} />
-          </Route>
+            </Route>
+            
+            <Route path='*' element={<NotFound />} />
         </Routes>
         </BrowserRouter>
         <ToastContainer />

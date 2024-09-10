@@ -87,7 +87,7 @@ export default function Notifications() {
                 >
                     <div className="flex-shrink-0">
                         <Avatar
-                            src={notification?.followerId?.avatar || notification?.likerId?.avatar || notification?.commenterId?.avatar}
+                            src={notification?.followerId?.avatar || notification?.likerId?.avatar || notification?.commenterId?.avatar || notification?.replierId?.avatar}
                             alt="avatar"
                             size="sm"
                         />

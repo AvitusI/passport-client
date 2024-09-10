@@ -7,7 +7,9 @@ import { SearchResults } from "./SearchResults"
 export const Search = ({
     queryText,
     searchResults,
-    setSearchResults
+    setSearchResults,
+    isChat,
+    onClose
 }) => {
     
 
@@ -41,7 +43,7 @@ export const Search = ({
                 >
                     <div className="px-4">
                         <div className="border border-t-1 pt-2 pb-4">
-                            <SearchResults searchResults={searchResults} />
+                            <SearchResults searchResults={searchResults} isChat={isChat} onClose={onClose} />
                         </div>
                     </div>
                 </div>

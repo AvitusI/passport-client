@@ -13,11 +13,13 @@ import {
     ModalContent,
     ModalBody
 } from "@nextui-org/react"
-import { NotebookPen, MessageSquareMore, Clapperboard} from "lucide-react"
+import { NotebookPen, MessageSquareMore, Clapperboard } from "lucide-react"
+import { toast } from "react-toastify"
 
 import Navbar from "../components/Navbar"
 import Sidebar from "../components/Sidebar"
 import { useUser } from "../context/UserContext"
+import { Bio } from "../components/Bio"
 import ProfilePosts from "../components/ProfilePosts"
 import ProfileComments from "../components/ProfileComments"
 import ProfileMedia from "../components/ProfileMedia"
@@ -38,7 +40,7 @@ const messageUser = async (sentData) => {
 
 const Profile = () => {
 
-    const { isOpen, onOpen, onOpenChange} = useDisclosure()
+    const { isOpen, onOpen, onOpenChange, onClose} = useDisclosure()
 
     const { userId } = useParams();
     const navigate  = useNavigate();
@@ -52,10 +54,6 @@ const Profile = () => {
     const commonFollowers = getCommonFollowers(user?.followers, data?.followers)
 
     const isSameUser = user?._id === data?._id
-    
-    console.log(isSameUser)
-
-    console.log(`data: ${getFollowersByProfileSummary(user, data)}`);
 
     const { mutate } = useMutation({
         mutationFn: messageUser,
@@ -64,9 +62,14 @@ const Profile = () => {
             navigate('/chat')
         },
         onError: (error) => {
-            console.log(error)
+            toast.error(error.response.data.message)
         }
     })
+
+    const handleClick = (user) => {
+        onClose()
+        navigate(`/profile/${user._id}`)
+    }
 
     return status === 'pending' ? (
         <div className="h-screen flex items-center justify-center">
@@ -108,18 +111,25 @@ const Profile = () => {
                         </div>
 
                         <div>
-                            <p className={`text-sm text-default-400 ${data.bio ? "block" : "hidden"}`}>
-                                {data.bio} <span className="italic underline text-default-500">more</span>
-                            </p>
+                            <p className={`text-sm text-default-500 ${data.bio ? "block" : "hidden"}`}>
+                                        {data?.bio?.length > 106 ? (
+                                            <>
+                                                {`${data.bio.slice(0, 107)}... `}  <Bio bio={data.bio} /> 
+                                            </>
+                                        ) : data?.bio ? data.bio : null}      
+                                    </p>
+                                    {(isSameUser && !data?.bio) && (
+                                        <p className="text-sm text-default-400">Your bio goes here. Help people to know more about you.</p>
+                                    ) }
                         </div>
 
                         <div className="flex gap-4">
-                            <div className="flex gap-1 items-center">
-                                <p className="font-semibold text-white text-xl sm:text-2xl">4</p>
+                            <div className="flex gap-2 items-center">
+                                <p className="font-customized text-white text-2xl sm:text-4xl">{data?.following?.length ? data?.following?.length : 0}</p>
                                 <p className="text-default-500 text-xs">Following</p>
                             </div>
-                            <div className="flex gap-1 items-center">
-                                <p className="font-semibold text-white text-xl sm:text-2xl">{data.followers.length}</p>
+                            <div className="flex gap-2 items-center">
+                                <p className="font-customized text-white text-2xl sm:text-4xl">{data.followers.length}</p>
                                 <p className="text-default-500 text-xs">{`${data.followers.length === 1 ? "Follower" : "Followers"}`}</p>
                             </div>
                         </div>
@@ -148,7 +158,7 @@ const Profile = () => {
                                         <div className="flex flex-col h-auto max-h-[400px] overflow-scroll container">
                                             <div className="p-4">
                                                 {commonFollowers.map((user) => (
-                                                    <div key={user.id}>
+                                                    <div key={user._id}>
                                                         <div className="relative rounded-lg px-2 py-2 flex items-center space-x-3 mb-3">
                                                             <div className="flex-shrink-0">
                                                                 <Avatar src={user.avatar} alt="avatar" />
@@ -159,7 +169,7 @@ const Profile = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="flex items-center justify-between">
-                                                                <Button size="sm" radius="full" className="bg-black text-white uppercase">Profile</Button>
+                                                                <Button size="sm" radius="full" className="bg-black text-white uppercase" onClick={() => handleClick(user)}>Profile</Button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -189,7 +199,7 @@ const Profile = () => {
 
                     </section>
 
-
+                    <div className="max-w-96">
                     <Tabs radius="full" color="warning">
                                     <Tab
                                         key="posts"
@@ -224,7 +234,8 @@ const Profile = () => {
                                     >
                                         <ProfileMedia userId={userId} />
                                     </Tab>
-                    </Tabs>
+                        </Tabs>
+                    </div>
                             
                 </div>
                 {/*  blank column in large devices*/}

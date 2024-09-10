@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import {
     Modal,
@@ -10,9 +11,9 @@ import { SearchIcon } from "lucide-react";
 
 import { Search } from "./Search";
 
-export const SearchModal = () => {
+export const SearchModal = ({ isChat }) => {
 
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   
   const [queryText, setQueryText] = useState("")
   const [searchResults, setSearchResults] = useState([])
@@ -57,6 +58,8 @@ export const SearchModal = () => {
                   setQueryText={setQueryText}
                   searchResults={searchResults}
                   setSearchResults={setSearchResults}
+                  isChat={isChat}
+                  onClose={onClose}
                 />
               </ModalBody>
             

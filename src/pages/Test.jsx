@@ -18,6 +18,7 @@ import { Bookmark, Ellipsis, Heart, MessageSquareMore, Send, Smile, Reply, SendH
 
 import { getFollowersSummary } from "../utils/followerSummary"
 import { formatTimeDifference } from "../utils/formatTime"
+import { Bio } from "../components/Bio"
 
 const post = {
     content: "Hi, there. I'm so excited to share with you a couple of things I have got today. But before I take charge, I would love to know more about you, at least an introduction.",
@@ -230,6 +231,8 @@ const messageNotification = [
         read: true
     }
 ]
+
+const bio = "I am a frontend developer and UI/UX enthusiast. I love to code and design beautiful interfaces. I am a self-taught developer and I have been coding for the past 5 years. I am passionate about building products that solve real-world problems. I am currently working on a project that will help developers to build beautiful interfaces with ease. I am open to collaborations and partnerships. Feel free to reach out to me."
 
 export default function Test() {
 
@@ -841,6 +844,8 @@ export default function Test() {
                     </div>
 
                 </article>
+
+                <Bio bio={bio} />
 
             </section>
         </div>

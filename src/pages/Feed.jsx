@@ -4,14 +4,12 @@ import axios from "axios"
 import { useInView } from "react-intersection-observer"
 import { RingLoader, ClipLoader } from "react-spinners"
 
-import { useUser } from "../context/UserContext"
 import Sidebar from "../components/Sidebar"
 import PostCard from "../components/PostCard"
 import Post from "../components/Post"
 import Navbar from "../components/Navbar"
 
 const fetchUserFeed = async ({ pageParam }) => {
-    //await new Promise((resolve) => setTimeout(resolve, 3000))
     const response = await axios.get(`http://localhost:5000/api/feed?page=${pageParam}`, { withCredentials: true })
 
     return response.data
@@ -19,7 +17,6 @@ const fetchUserFeed = async ({ pageParam }) => {
 
 const Feed = () => {
 
-    const { user } = useUser()
     const { ref, inView } = useInView()
 
     const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
@@ -33,7 +30,7 @@ const Feed = () => {
         if (inView) {
             fetchNextPage()
         }
-    }, [inView, fetchNextPage, user])
+    }, [inView, fetchNextPage])
 
     return status === 'pending' ? (
         <div className="h-screen flex items-center justify-center">
@@ -72,7 +69,7 @@ const Feed = () => {
                                             )
                                         }) : <div>
                                                 <p className="text-lg text-center text-white mt-6">
-                                                    Your feed is empty. Follow some users to populate it.
+                                                    To help us populate your feed, follow some users or post some content.
                                                 </p>
                                             </div>
                                         }

@@ -20,6 +20,7 @@ import { Ellipsis } from "lucide-react"
 
 import { useUser } from "../context/UserContext"
 import LikeButton from "./LikeButton"
+import { socket } from "../utils"
 import { queryClient } from "../main"
 import ListDetailsComment from "./ListDetailsComment"
 import { CommentReplyComp } from "./CommentReplyComp"
@@ -52,10 +53,15 @@ const Comment = ({ comment }) => {
     return data
   }
 
-  const { mutate: mutateLike, isPending } = useMutation({
+  const awaitNotification = () => {
+    setTimeout(() => { socket.emit("new_notification") }, 1000)
+  }
+
+  const { mutate: mutateLike } = useMutation({
     mutationFn: sendLike,
     onSuccess: () => {
       refetchNotifications()
+      awaitNotification()
       queryClient.invalidateQueries(['post', comment.postId], { refetchActive: true })
     },
     onError: (error) => { 
@@ -132,7 +138,7 @@ const Comment = ({ comment }) => {
                   <p className={`text-xs ${comment?.likes.length > 0 ? "block" : "hidden"}`}>
                     {comment?.likes.length > 0 ? comment?.likes.length : null}
                   </p>
-                  <LikeButton liked={liked} action={likeAction} isPending={isPending} />
+                  <LikeButton liked={liked} action={likeAction} />
                 </div>
                 <CommentReplyComp comment={comment} />
               </div>

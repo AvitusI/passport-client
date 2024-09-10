@@ -38,7 +38,7 @@ export const ReplyComp = ({ reply }) => {
         }
     }
 
-    const { mutate: mutateLike, isPendingLike } = useMutation({
+    const { mutate: mutateLike } = useMutation({
         mutationFn: sendLike,
         onSuccess: () => {
             refetchNotifications()
@@ -82,7 +82,7 @@ export const ReplyComp = ({ reply }) => {
                     <div className="grid grid-cols-2">
                         <div className="flex justify-center items-center gap-2">
                             <span className="text-xs font-semibold">{reply?.likes.length > 0 ? reply?.likes.length : null}</span>
-                            <LikeButton liked={liked} action={likeAction} isPending={isPendingLike} isReply={true} />
+                            <LikeButton liked={liked} action={likeAction} isReply={true} />
                         </div>
                         <div className={`flex justify-center items-center ${isAuthor ? "" : "hidden"}`}>
                             <Button

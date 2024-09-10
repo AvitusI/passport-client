@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
-import { Spinner } from "@nextui-org/react"
+import { RingLoader } from "react-spinners"
 
 import { EditProfileComp } from "../components/ProfileChangeComps/EditProfileComp"
 
@@ -17,19 +17,24 @@ const EditProfile = () => {
 
     const { userId } = useParams()
 
-    const { data: user, status, error } = useQuery({
+    const { data: user, status } = useQuery({
       queryKey: ["post", userId],
       queryFn: fetchPost
    })
 
     return status === "pending" ? (
     <div className="h-screen w-screen flex justify-center items-center">
-            <Spinner size="lg" />
+        <div className="flex flex-col gap-2 items-center">
+              <RingLoader color="orange" />
+              <span className="text-xl">Just a moment...</span>
+            </div>
         </div>
   ) : status === "error" ? (
       <div className="h-screen w-screen flex justify-center items-center">
-                <h1 className="text-3xl text-white text-center">An Error Occured: { error.message}</h1>
-            </div>
+          <h1 className="text-3xl text-white text-center">
+            Something went wromg. Try refreshing the page.
+          </h1>
+      </div>
     ) : (
     <EditProfileComp user={user} />
   )

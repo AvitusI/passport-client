@@ -29,6 +29,10 @@ const ChatInput = ({ selectedChat }) => {
     }
   })
 
+  const awaitNotification = () => {
+    setTimeout(() => { socket.emit("new_notification") }, 1000)
+  }
+
   useEffect(() => { 
     socket.off("receive_message").on("receive_message", (message) => { 
     const currentMessages = queryClient.getQueryData(["messages-fetched", selectedChat._id])
@@ -61,6 +65,7 @@ const ChatInput = ({ selectedChat }) => {
     }
     
     await socket.emit("send_message", message)
+    awaitNotification()
     setSendMessage("")
     mutate(messageObj)
   }

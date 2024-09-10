@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { useMutation } from "@tanstack/react-query"
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
@@ -7,6 +7,7 @@ import { Avatar, Badge, Popover, PopoverTrigger, PopoverContent } from '@nextui-
 
 import { useUser } from "../context/UserContext"
 import Sidebar from './Sidebar'
+import { toast } from 'react-toastify'
 
 const markAllRead = async (sentData) => {
   const { data } = await axios.put(`http://localhost:5000/api/notifications/readAll`, sentData, { withCredentials: true })
@@ -18,12 +19,16 @@ const markAsRead = async (sentData) => {
     return data
 }
 
-const Navbar = () => {
+const markAllReadMessages = async (sentData) => { 
+  const { data } = await axios.put(`http://localhost:5000/api/messagenotify/readAll`, sentData, { withCredentials: true })
+  return data
+}
+
+const Navbar = memo(() => {
 
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
 
   const { user, notifications, messageNotification, refetchNotifications } = useUser()
-  console.log(notifications)
   const navigate = useNavigate()
 
   const toggleMobileDrawer = () => { 
@@ -37,6 +42,12 @@ const Navbar = () => {
     onError: (error) => console.log(`Error: ${error}`)
   })
 
+  const { mutate: mutateMessages } = useMutation({
+    mutationFn: markAllReadMessages,
+    onSuccess: () => refetchNotifications(),
+    onError: () => toast.error("Operation failed")
+  }) 
+
   const { mutate: mutateRead } = useMutation({
         mutationFn: markAsRead,
     })
@@ -47,8 +58,8 @@ const Navbar = () => {
   }
 
   const handleRedirect = (notification) => {
-    mutateRead({ id: notification._id })
     refetchNotifications()
+    mutateRead({ id: notification._id })
     switch (notification.type) {
       case "FollowNotification":
         navigate(`/profile/${notification.followerId._id}`)
@@ -74,6 +85,10 @@ const Navbar = () => {
   const handleMarkAllRead = () => { 
     refetchNotifications()
     mutate({ userId: user._id })
+  }
+
+  const handeMarkAllReadMessages = () => {
+    mutateMessages({ userId: user._id })
   }
 
   return (
@@ -106,7 +121,7 @@ const Navbar = () => {
                               className="w-[300px] grid grid-cols-custom items-center p-2 border-b border-gray-200 gap-2 cursor-pointer hover:bg-slate-300 rounded-md"
                             >
                               <Avatar
-                                src={notification?.followerId?.avatar || notification?.likerId?.avatar || notification?.commenterId?.avatar}
+                                src={notification?.followerId?.avatar || notification?.likerId?.avatar || notification?.commenterId?.avatar || notification?.replierId?.avatar}
                                 alt='avatar'
                                 className='w-6 h-6 mr-2'
                               />
@@ -156,7 +171,15 @@ const Navbar = () => {
                             <div className="p-2">
                                 <p className="text-sm">No new messages</p>
                             </div>
-                          )}
+                        )}
+                        <div className='grid grid-cols-customization items-center p-2 w-full'>
+                          <div className='flex justify-start'>
+                            <Link to='/messageNotifications' className='text-sm text-blue-500 float-start'>See all</Link>
+                          </div>
+                          <div className={`flex justify-end ${notifications.length > 0 ? "" : "hidden"}`}>
+                            <span className='text-xs text-blue-500 float-end cursor-pointer' onClick={handeMarkAllReadMessages}>Mark all as read</span>
+                          </div>                        
+                        </div>
                     </PopoverContent>
                   </Popover>
                 </Badge>
@@ -174,6 +197,8 @@ const Navbar = () => {
       )}
     </div>
   )
-}
+})
+
+Navbar.displayName = 'Navbar'
 
 export default Navbar

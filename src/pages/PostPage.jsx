@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
-import { Spinner } from "@nextui-org/react"
+import { RingLoader } from "react-spinners"
 
 import Navbar from "../components/Navbar"
 import Sidebar from "../components/Sidebar"
@@ -26,7 +26,10 @@ const PostPage = () => {
 
     return status === 'pending' ? (
         <div className="h-screen w-screen flex justify-center items-center">
-            <Spinner size="lg" />
+            <div className="flex flex-col gap-2 items-center">
+                <RingLoader color="orange" />
+                <span className="text-xl">Just a moment...</span>
+            </div>
         </div>
     ) : status === 'error' ? (
             <div className="h-screen w-screen flex justify-center items-center">

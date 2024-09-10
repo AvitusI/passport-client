@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios" 
-import { Spinner } from "@nextui-org/react"
 
 import Navbar from "../components/Navbar"
 import Sidebar from "../components/Sidebar"
 import UserCard from "../components/UserCard"
+import { RingLoader } from "react-spinners"
 
 const fetchUsers = async () => {
   const { data } = await axios.get(`http://localhost:5000/api/users`, { withCredentials: true })
@@ -13,17 +13,22 @@ const fetchUsers = async () => {
 
 const Explore = () => {
 
-  const { data, status, error } = useQuery({
+  const { data, status } = useQuery({
     queryKey: ['users'],
     queryFn: fetchUsers
   })
   return status === 'pending' ? (
     <div className="h-screen w-screen flex justify-center items-center">
-      <Spinner size="lg" />
+      <div className="flex flex-col gap-2 items-center">
+        <RingLoader color="orange" />
+        <span className="text-xl">Just a moment...</span>
+      </div>
     </div>
   ) : status === 'error' ? (
       <div className="h-screen w-screen flex justify-center items-center">
-        <h1 className="text-3xl text-white text-center">{error.message}</h1>
+        <h1 className="text-3xl text-white text-center">
+          Network error occured. Try refreshing the page.
+        </h1>
       </div>
     ) : (
         <>

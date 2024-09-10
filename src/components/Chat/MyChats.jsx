@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom"
-import { SearchIcon, CircleChevronLeft } from "lucide-react"
+import {  CircleChevronLeft } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { Avatar, Button } from "@nextui-org/react"
@@ -8,6 +8,7 @@ import { RingLoader } from "react-spinners"
 
 import { useUser } from "../../context/UserContext"
 import UserChat from "./UserChat"
+import { SearchModal } from "../SearchComps/SearchModal"
 
 // xl:w-64 ln-12
 // fetch the chats here
@@ -71,15 +72,7 @@ const MyChats = () => {
                                       </div>
 
                                       <div className="mb-6">
-                                          <div className="relative">
-                                              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                  <SearchIcon />
-                                              </div>
-                                              <input
-                                                  name="search"
-                                                  className="focus:ring-red-500 focus:border-red-500 focus:outline-none block w-full pl-10 sm:text-sm border-gray-100 rounded-full p-2 border"
-                                              />
-                                          </div>
+                                          <SearchModal isChat />
                                       </div>
                                     {/* SEARCH BOX END */}
                   
