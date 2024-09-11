@@ -1,15 +1,15 @@
 const SignIn = () => {
 
     const doSubmitGoogle = () => {
-        window.location.href = 'https://shownext-tav7bg80.b4a.run/api/auth/google'
+        window.location.href = 'https://passport-server-production-a778.up.railway.app/api/auth/google'
     }
 
     const doSubmitGitHub = () => {
-        window.location.href = 'https://shownext-tav7bg80.b4a.run/api/auth/github'
+        window.location.href = 'https://passport-server-production-a778.up.railway.app/api/auth/github'
     }
 
     const doSubmitDiscord = () => { 
-        window.location.href = 'https://shownext-tav7bg80.b4a.run/api/auth/discord'
+        window.location.href = 'https://passport-server-production-a778.up.railway.app/api/auth/discord'
     }
     
   return (

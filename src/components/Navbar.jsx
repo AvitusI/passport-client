@@ -10,17 +10,17 @@ import Sidebar from './Sidebar'
 import { toast } from 'react-toastify'
 
 const markAllRead = async (sentData) => {
-  const { data } = await axios.put(`https://shownext-tav7bg80.b4a.run/api/notifications/readAll`, sentData, { withCredentials: true })
+  const { data } = await axios.put(`https://passport-server-production-a778.up.railway.app/api/notifications/readAll`, sentData, { withCredentials: true })
   return data
 }
 
 const markAsRead = async (sentData) => { 
-    const { data } = await axios.put(`https://shownext-tav7bg80.b4a.run/api/notifications/`, sentData,{ withCredentials: true })
+    const { data } = await axios.put(`https://passport-server-production-a778.up.railway.app/api/notifications/`, sentData,{ withCredentials: true })
     return data
 }
 
 const markAllReadMessages = async (sentData) => { 
-  const { data } = await axios.put(`https://shownext-tav7bg80.b4a.run/api/messagenotify/readAll`, sentData, { withCredentials: true })
+  const { data } = await axios.put(`https://passport-server-production-a778.up.railway.app/api/messagenotify/readAll`, sentData, { withCredentials: true })
   return data
 }
 

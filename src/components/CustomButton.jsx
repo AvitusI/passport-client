@@ -19,11 +19,11 @@ const CustomButton = ({ data }) => {
 
     const sendFollowData = async (sentData) => {
         if (followStatus) {
-            const { data } = await axios.post(`https://shownext-tav7bg80.b4a.run/api/users/unfollow`, sentData, { withCredentials: true })
+            const { data } = await axios.post(`https://passport-server-production-a778.up.railway.app/api/users/unfollow`, sentData, { withCredentials: true })
             return data
         }
         else {
-            const { data } = await axios.post(`https://shownext-tav7bg80.b4a.run/api/users/follow`, sentData, { withCredentials: true })
+            const { data } = await axios.post(`https://passport-server-production-a778.up.railway.app/api/users/follow`, sentData, { withCredentials: true })
             return data
         }
     }

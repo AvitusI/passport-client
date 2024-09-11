@@ -13,7 +13,7 @@ import { toast } from "react-toastify"
 
 const deleteReply = async (sentData) => { 
     // Axios handles delete requests differently from other requests
-    const { data } = await axios.delete("https://shownext-tav7bg80.b4a.run/api/reply/delete",  { data: sentData, withCredentials: true })
+    const { data } = await axios.delete("https://passport-server-production-a778.up.railway.app/api/reply/delete",  { data: sentData, withCredentials: true })
     return data
 }
 
@@ -29,11 +29,11 @@ export const ReplyComp = ({ reply }) => {
 
     const sendLike = async (sentData) => {
         if (likeStatus) {
-            const { data } = await axios.post("https://shownext-tav7bg80.b4a.run/api/reply/unlike", sentData, { withCredentials: true })
+            const { data } = await axios.post("https://passport-server-production-a778.up.railway.app/api/reply/unlike", sentData, { withCredentials: true })
             return data
         }
         else {
-            const { data } = await axios.post("https://shownext-tav7bg80.b4a.run/api/reply/like", sentData, { withCredentials: true })
+            const { data } = await axios.post("https://passport-server-production-a778.up.railway.app/api/reply/like", sentData, { withCredentials: true })
             return data
         }
     }

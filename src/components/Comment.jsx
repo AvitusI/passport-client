@@ -39,17 +39,17 @@ const Comment = ({ comment }) => {
 
   const sendLike = async (sentData) => {
     if (likeStatus) {
-      const { data } = await axios.post("https://shownext-tav7bg80.b4a.run/api/comments/unlike", sentData, { withCredentials: true })
+      const { data } = await axios.post("https://passport-server-production-a778.up.railway.app/api/comments/unlike", sentData, { withCredentials: true })
       return data
     }
     else {
-      const { data } = await axios.post("https://shownext-tav7bg80.b4a.run/api/comments/like", sentData, { withCredentials: true })
+      const { data } = await axios.post("https://passport-server-production-a778.up.railway.app/api/comments/like", sentData, { withCredentials: true })
       return data
     }
   }
 
   const deleteComment = async () => {
-    const { data } = await axios.delete(`https://shownext-tav7bg80.b4a.run/api/comments/${comment._id}`, { withCredentials: true })
+    const { data } = await axios.delete(`https://passport-server-production-a778.up.railway.app/api/comments/${comment._id}`, { withCredentials: true })
     return data
   }
 

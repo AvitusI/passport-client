@@ -7,7 +7,7 @@ import { PuffLoader } from "react-spinners"
 
 const retrieveMedia = async ({ queryKey }) => {
   const [,userId] = queryKey
-  const { data } = await axios.get(`https://shownext-tav7bg80.b4a.run/api/media/${userId}`, { withCredentials: true })
+  const { data } = await axios.get(`https://passport-server-production-a778.up.railway.app/api/media/${userId}`, { withCredentials: true })
   return data
 }
 

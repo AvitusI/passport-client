@@ -15,7 +15,7 @@ const schema = yup.object().shape({
 })
 
 const signUp = async (sentData) => {
-  const response = await axios.post('https://shownext-tav7bg80.b4a.run/api/users', sentData, {withCredentials: true})
+  const response = await axios.post('https://passport-server-production-a778.up.railway.app/api/users', sentData, {withCredentials: true})
   return response.data;
 }
 

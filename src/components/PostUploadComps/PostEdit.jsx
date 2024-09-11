@@ -36,7 +36,7 @@ const PostEdit = () => {
 
     try {
       const response = await axios.post(
-        "https://shownext-tav7bg80.b4a.run/api/image/upload",
+        "https://passport-server-production-a778.up.railway.app/api/image/upload",
         formData,
         { withCredentials: true }
       )
@@ -48,7 +48,7 @@ const PostEdit = () => {
 
   const sendPost = async (sentData) => {
     const { data } = await axios.post(
-      "https://shownext-tav7bg80.b4a.run/api/posts",
+      "https://passport-server-production-a778.up.railway.app/api/posts",
       sentData,
       { withCredentials: true }
     )

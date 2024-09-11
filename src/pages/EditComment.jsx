@@ -6,7 +6,7 @@ import { EditCommentComp } from "../components/EditCommentComp"
 
 const fetchComment = async ({ queryKey }) => {
     const [, commentId] = queryKey
-    const response = await axios.get(`https://shownext-tav7bg80.b4a.run/api/comment/${commentId}`, { withCredentials: true })
+    const response = await axios.get(`https://passport-server-production-a778.up.railway.app/api/comment/${commentId}`, { withCredentials: true })
     return response.data
 }
 

@@ -11,7 +11,7 @@ const schema = yup.object().shape({
 })
 
 const requestResetPassword = async (sentData) => {
-    const { data } = await axios.post("https://shownext-tav7bg80.b4a.run/api/users/requestResetPassword", sentData, { withCredentials: true });
+    const { data } = await axios.post("https://passport-server-production-a778.up.railway.app/api/users/requestResetPassword", sentData, { withCredentials: true });
     return data
 }
 

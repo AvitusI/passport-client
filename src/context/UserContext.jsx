@@ -25,7 +25,7 @@ const UserProvider = props => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const result = await fetch("https://shownext-tav7bg80.b4a.run/api/auth/status", {
+                const result = await fetch("https://passport-server-production-a778.up.railway.app/api/auth/status", {
                     credentials: "include",
                     headers: {
                         accept: 'application/json',
@@ -38,7 +38,7 @@ const UserProvider = props => {
                     socket.emit("join_notifications", userData._id);
                 }
 
-                const msgNotification = await fetch(`https://shownext-tav7bg80.b4a.run/api/messagenotify/${userData._id}`, {
+                const msgNotification = await fetch(`https://passport-server-production-a778.up.railway.app/api/messagenotify/${userData._id}`, {
                     credentials: "include",
                     headers: {
                         accept: 'application/json,'
@@ -49,7 +49,7 @@ const UserProvider = props => {
                 const transformedNotifications = transformNotification(groupedNotification)
                 setMessageNotification(transformedNotifications)
 
-                const allNotifications = await fetch(`https://shownext-tav7bg80.b4a.run/api/notifications/${userData._id}`, {
+                const allNotifications = await fetch(`https://passport-server-production-a778.up.railway.app/api/notifications/${userData._id}`, {
                     credentials: "include",
                      headers: {
                         accept: 'application/json',

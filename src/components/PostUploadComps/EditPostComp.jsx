@@ -41,7 +41,7 @@ const EditPostComp = ({ post }) => {
 
     try {
       const response = await axios.post(
-        "https://shownext-tav7bg80.b4a.run/api/image/upload",
+        "https://passport-server-production-a778.up.railway.app/api/image/upload",
         formData,
         { withCredentials: true }
       )
@@ -53,7 +53,7 @@ const EditPostComp = ({ post }) => {
 
   const sendPost = async (sentData) => {
     const { data } = await axios.put(
-      `https://shownext-tav7bg80.b4a.run/api/posts/${post._id}`,
+      `https://passport-server-production-a778.up.railway.app/api/posts/${post._id}`,
       sentData,
       { withCredentials: true }
     )

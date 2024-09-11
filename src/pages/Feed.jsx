@@ -10,7 +10,7 @@ import Post from "../components/Post"
 import Navbar from "../components/Navbar"
 
 const fetchUserFeed = async ({ pageParam }) => {
-    const response = await axios.get(`https://shownext-tav7bg80.b4a.run/api/feed?page=${pageParam}`, { withCredentials: true })
+    const response = await axios.get(`https://passport-server-production-a778.up.railway.app/api/feed?page=${pageParam}`, { withCredentials: true })
 
     return response.data
 }

@@ -15,7 +15,7 @@ import { SearchModal } from "../SearchComps/SearchModal"
 // use the userId to fetch the chats
 
 const fetchChats = async () => {
-    const { data } = await axios.get("https://shownext-tav7bg80.b4a.run/api/chat", { withCredentials: true })
+    const { data } = await axios.get("https://passport-server-production-a778.up.railway.app/api/chat", { withCredentials: true })
     return data
 } 
 

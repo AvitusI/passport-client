@@ -20,7 +20,7 @@ export const Search = ({
         }
         
         (async () => {
-            const url = "https://shownext-tav7bg80.b4a.run/api/users/search"
+            const url = "https://passport-server-production-a778.up.railway.app/api/users/search"
 
             const { data } = await axios.get(url, {
                 params: {
