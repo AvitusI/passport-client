@@ -7,7 +7,7 @@ import { Avatar } from "@nextui-org/react"
 import { useUser } from "../../context/UserContext"
 
 const messageUser = async (sentData) => {
-    const { data } = await axios.post(`https://passport-server-production-a778.up.railway.app/api/chat`, sentData, { withCredentials: true })
+    const { data } = await axios.post(`http://localhost:5000/api/chat`, sentData, { withCredentials: true })
     return data
 }
 

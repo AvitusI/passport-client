@@ -44,7 +44,7 @@ export const EditProfileComp = ({ user }) => {
 
     try {
       const response = await axios.post(
-        "https://passport-server-production-a778.up.railway.app/api/image/upload",
+        "http://localhost:5000/api/image/upload",
         formData,
         { withCredentials: true }
       )
@@ -56,7 +56,7 @@ export const EditProfileComp = ({ user }) => {
     
     const sendProfile = async (sentData) => {
         const { data } = await axios.put(
-            `https://passport-server-production-a778.up.railway.app/api/users/${user._id}`,
+            `http://localhost:5000/api/users/${user._id}`,
             sentData,
             { withCredentials: true }
         )

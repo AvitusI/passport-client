@@ -15,7 +15,7 @@ const ChatInput = ({ selectedChat }) => {
   const { user, chatMessages, setChatMessages } = useUser()
 
   const sendMsg = async (messageObj) => { 
-    const { data } = await axios.post('https://passport-server-production-a778.up.railway.app/api/messages',  messageObj , { withCredentials: true })
+    const { data } = await axios.post('http://localhost:5000/api/messages',  messageObj , { withCredentials: true })
     return data
   }
   

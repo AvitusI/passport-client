@@ -8,12 +8,12 @@ import { useUser } from "../context/UserContext"
 
 const getNotifications = async ({ queryKey }) => {
     const [, userId] = queryKey
-    const { data } = await axios.get(`https://passport-server-production-a778.up.railway.app/api/notificationsAll/${userId}`, { withCredentials: true })
+    const { data } = await axios.get(`http://localhost:5000/api/notificationsAll/${userId}`, { withCredentials: true })
     return data
 }
 
 const markAsRead = async (sentData) => { 
-    const { data } = await axios.put(`https://passport-server-production-a778.up.railway.app/api/notifications/`, sentData,{ withCredentials: true })
+    const { data } = await axios.put(`http://localhost:5000/api/notifications/`, sentData,{ withCredentials: true })
     return data
 }
 

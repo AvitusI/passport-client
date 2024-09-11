@@ -28,12 +28,12 @@ import { getCommonFollowers, getFollowersByProfileSummary } from "../utils/follo
 
 const fetchUser = async ({ queryKey }) => {
     const [, userId] = queryKey
-    const response = await axios.get(`https://passport-server-production-a778.up.railway.app/api/users/${userId}`, { withCredentials: true })
+    const response = await axios.get(`http://localhost:5000/api/users/${userId}`, { withCredentials: true })
     return response.data
 }
 
 const messageUser = async (sentData) => {
-        const { data } = await axios.post(`https://passport-server-production-a778.up.railway.app/api/chat`, sentData, { withCredentials: true });
+        const { data } = await axios.post(`http://localhost:5000/api/chat`, sentData, { withCredentials: true });
         return data
 }
 

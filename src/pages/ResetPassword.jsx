@@ -13,7 +13,7 @@ const schema = yup.object().shape({
 
 const resetPassword = async (sentData) => {
     const { data } = await axios.post(
-        "https://passport-server-production-a778.up.railway.app/api/users/resetPassword",
+        "http://localhost:5000/api/users/resetPassword",
         sentData,
         { withCredentials: true }
     )

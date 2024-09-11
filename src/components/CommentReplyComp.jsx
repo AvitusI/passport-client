@@ -19,12 +19,12 @@ import { ReplyComp } from "./ReplyComp"
 
 const fetchReplies = async ({ queryKey }) => {
     const [, commentId] = queryKey
-    const { data } = await axios.get(`https://passport-server-production-a778.up.railway.app/api/comments/replies/${commentId}`, { withCredentials: true })
+    const { data } = await axios.get(`http://localhost:5000/api/comments/replies/${commentId}`, { withCredentials: true })
     return data
 }
 
 const replyComment = async (sentData) => {
-    const { data } = await axios.post("https://passport-server-production-a778.up.railway.app/api/comments/reply", sentData, { withCredentials: true })
+    const { data } = await axios.post("http://localhost:5000/api/comments/reply", sentData, { withCredentials: true })
     return data
 }
  

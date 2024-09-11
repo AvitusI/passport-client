@@ -22,15 +22,15 @@ function Home() {
   })
 
   const doSubmitGoogle = () => {
-        window.location.href = 'https://passport-server-production-a778.up.railway.app/api/auth/google'
+        window.location.href = 'http://localhost:5000/api/auth/google'
     }
 
     const doSubmitGitHub = () => {
-        window.location.href = 'https://passport-server-production-a778.up.railway.app/api/auth/github'
+        window.location.href = 'http://localhost:5000/api/auth/github'
     }
 
     const doSubmitDiscord = () => { 
-        window.location.href = 'https://passport-server-production-a778.up.railway.app/api/auth/discord'
+        window.location.href = 'http://localhost:5000/api/auth/discord'
   }
   
   return (

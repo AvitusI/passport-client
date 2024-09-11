@@ -9,7 +9,7 @@ import ActivatedCard from "../components/ActivatedCard"
 
 const activateAccount = async (sentData) => {
   const response = await axios.post(
-    "https://passport-server-production-a778.up.railway.app/api/users/activateAccount",
+    "http://localhost:5000/api/users/activateAccount",
     sentData,
     { withCredentials: true }
   )

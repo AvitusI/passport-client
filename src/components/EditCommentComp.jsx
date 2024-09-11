@@ -32,7 +32,7 @@ export const EditCommentComp = ({ comment }) => {
 
     const sendComment = async (sentData) => {
         const { data } = await axios.put(
-            `https://passport-server-production-a778.up.railway.app/api/comments/${comment._id}`,
+            `http://localhost:5000/api/comments/${comment._id}`,
             sentData,
             { withCredentials: true }
         )

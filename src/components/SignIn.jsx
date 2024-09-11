@@ -33,7 +33,7 @@ const SignInComponent = () => {
 
   // The function to send the request to the server
   const loginUser = async (sentData) => {
-    const response = await axios.post('https://passport-server-production-a778.up.railway.app/api/auth', sentData, { withCredentials: true })
+    const response = await axios.post('http://localhost:5000/api/auth', sentData, { withCredentials: true })
     return response.data
   }
 

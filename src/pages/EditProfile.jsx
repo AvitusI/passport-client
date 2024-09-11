@@ -9,7 +9,7 @@ import { EditProfileComp } from "../components/ProfileChangeComps/EditProfileCom
 
 const fetchPost = async ({ queryKey }) => {
     const [, userId] = queryKey
-    const response = await axios.get(`https://passport-server-production-a778.up.railway.app/api/users/${userId}`, { withCredentials: true })
+    const response = await axios.get(`http://localhost:5000/api/users/${userId}`, { withCredentials: true })
     return response.data
 }
 
