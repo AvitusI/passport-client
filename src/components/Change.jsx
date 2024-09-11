@@ -17,7 +17,7 @@ import {
 import { toast } from "react-toastify"
 
 const logout = async () => {
-    const { data } = await axios.post("http://localhost:5000/api/auth/logout", {},  { withCredentials: true })
+    const { data } = await axios.post("https://shownext-tav7bg80.b4a.run/api/auth/logout", {},  { withCredentials: true })
     return data
 }
 

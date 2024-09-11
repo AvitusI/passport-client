@@ -15,7 +15,7 @@ const schema = yup.object().shape({
 })
 
 const signUp = async (sentData) => {
-  const response = await axios.post('http://localhost:5000/api/users', sentData, {withCredentials: true})
+  const response = await axios.post('https://shownext-tav7bg80.b4a.run/api/users', sentData, {withCredentials: true})
   return response.data;
 }
 
@@ -38,7 +38,7 @@ const SignUpComponent = () => {
       navigate('/activateAccount')
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
     }
   })
 

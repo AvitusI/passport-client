@@ -10,17 +10,17 @@ import Sidebar from './Sidebar'
 import { toast } from 'react-toastify'
 
 const markAllRead = async (sentData) => {
-  const { data } = await axios.put(`http://localhost:5000/api/notifications/readAll`, sentData, { withCredentials: true })
+  const { data } = await axios.put(`https://shownext-tav7bg80.b4a.run/api/notifications/readAll`, sentData, { withCredentials: true })
   return data
 }
 
 const markAsRead = async (sentData) => { 
-    const { data } = await axios.put(`http://localhost:5000/api/notifications/`, sentData,{ withCredentials: true })
+    const { data } = await axios.put(`https://shownext-tav7bg80.b4a.run/api/notifications/`, sentData,{ withCredentials: true })
     return data
 }
 
 const markAllReadMessages = async (sentData) => { 
-  const { data } = await axios.put(`http://localhost:5000/api/messagenotify/readAll`, sentData, { withCredentials: true })
+  const { data } = await axios.put(`https://shownext-tav7bg80.b4a.run/api/messagenotify/readAll`, sentData, { withCredentials: true })
   return data
 }
 

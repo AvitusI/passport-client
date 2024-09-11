@@ -9,6 +9,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 import ImageUploader from "../PostUploadComps/ImageUploader"
+import { toast } from "react-toastify"
 
 const schema = yup.object().shape({
     username: yup.string().required().min(3),
@@ -16,8 +17,6 @@ const schema = yup.object().shape({
 })
 
 export const EditProfileComp = ({ user }) => {
-
-    console.log(user)
 
     const [files, setFiles] = useState(false)
 
@@ -45,7 +44,7 @@ export const EditProfileComp = ({ user }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/image/upload",
+        "https://shownext-tav7bg80.b4a.run/api/image/upload",
         formData,
         { withCredentials: true }
       )
@@ -57,7 +56,7 @@ export const EditProfileComp = ({ user }) => {
     
     const sendProfile = async (sentData) => {
         const { data } = await axios.put(
-            `http://localhost:5000/api/users/${user._id}`,
+            `https://shownext-tav7bg80.b4a.run/api/users/${user._id}`,
             sentData,
             { withCredentials: true }
         )
@@ -70,7 +69,7 @@ export const EditProfileComp = ({ user }) => {
             navigate(`/profile/${user._id}`)
         },
         onError: (error) => {
-            console.log(error)
+            toast.error(error.response.data.message)
         }
     })
 

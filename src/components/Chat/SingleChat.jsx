@@ -12,7 +12,7 @@ import { useEffect } from "react";
 
 const fetchMessages = async ({ queryKey }) => {
     const [, chatId] = queryKey
-    const { data } = await axios.get(`http://localhost:5000/api/messages/${chatId}`, { withCredentials: true })
+    const { data } = await axios.get(`https://shownext-tav7bg80.b4a.run/api/messages/${chatId}`, { withCredentials: true })
     return data
 }
 

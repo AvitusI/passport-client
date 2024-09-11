@@ -41,7 +41,7 @@ const EditPostComp = ({ post }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/image/upload",
+        "https://shownext-tav7bg80.b4a.run/api/image/upload",
         formData,
         { withCredentials: true }
       )
@@ -53,7 +53,7 @@ const EditPostComp = ({ post }) => {
 
   const sendPost = async (sentData) => {
     const { data } = await axios.put(
-      `http://localhost:5000/api/posts/${post._id}`,
+      `https://shownext-tav7bg80.b4a.run/api/posts/${post._id}`,
       sentData,
       { withCredentials: true }
     )

@@ -10,7 +10,7 @@ import { groupByUser, transformNotification } from "../utils/messageNotification
 
 const getMessageNotifications = async ({ queryKey }) => { 
     const [, userId] = queryKey
-    const { data } = await axios.get(`http://localhost:5000/api/messagenotifyAll/${userId}`, { withCredentials: true })
+    const { data } = await axios.get(`https://shownext-tav7bg80.b4a.run/api/messagenotifyAll/${userId}`, { withCredentials: true })
     return data
 }
 

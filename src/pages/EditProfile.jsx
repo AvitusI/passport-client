@@ -9,7 +9,7 @@ import { EditProfileComp } from "../components/ProfileChangeComps/EditProfileCom
 
 const fetchPost = async ({ queryKey }) => {
     const [, userId] = queryKey
-    const response = await axios.get(`http://localhost:5000/api/users/${userId}`, { withCredentials: true })
+    const response = await axios.get(`https://shownext-tav7bg80.b4a.run/api/users/${userId}`, { withCredentials: true })
     return response.data
 }
 

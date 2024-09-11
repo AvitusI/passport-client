@@ -7,7 +7,7 @@ import EditPostComp from "../components/PostUploadComps/EditPostComp"
 
 const fetchPost = async ({ queryKey }) => {
     const [, id] = queryKey
-    const response = await axios.get(`http://localhost:5000/api/posts/${id}`, { withCredentials: true })
+    const response = await axios.get(`https://shownext-tav7bg80.b4a.run/api/posts/${id}`, { withCredentials: true })
     return response.data
 }
 

@@ -25,34 +25,35 @@ const UserProvider = props => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const result = await fetch("http://localhost:5000/api/auth/status", {
+                const result = await fetch("https://shownext-tav7bg80.b4a.run/api/auth/status", {
                     credentials: "include",
                     headers: {
-                        accept: 'application/json',
+                        accept: '*/json',
                     }
                 });
                 const userData = await result.json();
                 setUser(userData);
+                console.log(userData);
                 if (userData) {
                     socket.emit("join_notifications", userData._id);
                 }
 
-                const msgNotification = await fetch(`http://localhost:5000/api/messagenotify/${userData._id}`, {
+                const msgNotification = await fetch(`https://shownext-tav7bg80.b4a.run/api/messagenotify/${userData._id}`, {
                     credentials: "include",
                     headers: {
-                        accept: 'application/json'
-                    }
+                        accept: '*/json,'
+                    }  
                 });
                 const msgNotificationData = await msgNotification.json();
                 const groupedNotification = groupByUser(msgNotificationData);
                 const transformedNotifications = transformNotification(groupedNotification)
                 setMessageNotification(transformedNotifications)
 
-                const allNotifications = await fetch(`http://localhost:5000/api/notifications/${userData._id}`, {
+                const allNotifications = await fetch(`https://shownext-tav7bg80.b4a.run/api/notifications/${userData._id}`, {
                     credentials: "include",
-                    headers: {
-                        accept: 'application/json',
-                    }
+                     headers: {
+                        accept: '*/json',
+                    }   
                 });
                 const allNotificationsData = await allNotifications.json()
                 setNotifications(allNotificationsData);

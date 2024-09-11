@@ -18,7 +18,7 @@ const CommentCard = ({ postId }) => {
 
   const sendComment = async (sentData) => {
     const response = await axios.post(
-        `http://localhost:5000/api/${postId}/comments`,
+        `https://shownext-tav7bg80.b4a.run/api/${postId}/comments`,
         sentData,
         { withCredentials: true }
     )

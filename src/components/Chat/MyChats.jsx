@@ -15,7 +15,7 @@ import { SearchModal } from "../SearchComps/SearchModal"
 // use the userId to fetch the chats
 
 const fetchChats = async () => {
-    const { data } = await axios.get("http://localhost:5000/api/chat", { withCredentials: true })
+    const { data } = await axios.get("https://shownext-tav7bg80.b4a.run/api/chat", { withCredentials: true })
     return data
 } 
 
@@ -75,11 +75,13 @@ const MyChats = () => {
                                           <SearchModal isChat />
                                       </div>
                                     {/* SEARCH BOX END */}
-                  
-                                      {/* Individual chats rendered here */}
-                                        {chats.map((chat) => (
-                                            <UserChat key={chat.id} chat={chat} />
-                                        ))}
+
+                                        {/* Individual chats rendered here */}
+                                        <div className="overflow-y-scroll container">
+                                            {chats.map((chat) => (
+                                                <UserChat key={chat.id} chat={chat} />
+                                            ))}
+                                        </div>
                   
                                 </div>
                               </div>

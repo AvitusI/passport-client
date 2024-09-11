@@ -20,7 +20,7 @@ export const Search = ({
         }
         
         (async () => {
-            const url = "http://localhost:5000/api/users/search"
+            const url = "https://shownext-tav7bg80.b4a.run/api/users/search"
 
             const { data } = await axios.get(url, {
                 params: {

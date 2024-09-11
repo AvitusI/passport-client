@@ -36,7 +36,7 @@ const PostEdit = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/image/upload",
+        "https://shownext-tav7bg80.b4a.run/api/image/upload",
         formData,
         { withCredentials: true }
       )
@@ -48,7 +48,7 @@ const PostEdit = () => {
 
   const sendPost = async (sentData) => {
     const { data } = await axios.post(
-      "http://localhost:5000/api/posts",
+      "https://shownext-tav7bg80.b4a.run/api/posts",
       sentData,
       { withCredentials: true }
     )

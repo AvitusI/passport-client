@@ -10,7 +10,7 @@ import { queryClient } from "../main"
 
 const sendPost = async (sentData) => {
     const response = await axios.post(
-        "http://localhost:5000/api/posts",
+        "https://shownext-tav7bg80.b4a.run/api/posts",
         sentData,
         { withCredentials: true }
     )
