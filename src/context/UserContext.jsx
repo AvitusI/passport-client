@@ -28,7 +28,7 @@ const UserProvider = props => {
                 const result = await fetch("https://shownext-tav7bg80.b4a.run/api/auth/status", {
                     credentials: "include",
                     headers: {
-                        accept: '*/json',
+                        accept: 'application/json',
                     }
                 });
                 const userData = await result.json();
@@ -41,7 +41,7 @@ const UserProvider = props => {
                 const msgNotification = await fetch(`https://shownext-tav7bg80.b4a.run/api/messagenotify/${userData._id}`, {
                     credentials: "include",
                     headers: {
-                        accept: '*/json,'
+                        accept: 'application/json,'
                     }  
                 });
                 const msgNotificationData = await msgNotification.json();
@@ -52,7 +52,7 @@ const UserProvider = props => {
                 const allNotifications = await fetch(`https://shownext-tav7bg80.b4a.run/api/notifications/${userData._id}`, {
                     credentials: "include",
                      headers: {
-                        accept: '*/json',
+                        accept: 'application/json',
                     }   
                 });
                 const allNotificationsData = await allNotifications.json()
