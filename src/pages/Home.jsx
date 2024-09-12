@@ -22,15 +22,15 @@ function Home() {
   })
 
   const doSubmitGoogle = () => {
-        window.location.href = 'http://localhost:5000/api/auth/google'
+        window.location.href = 'https://shownext1-7sh63dv9.b4a.run/api/auth/google'
     }
 
     const doSubmitGitHub = () => {
-        window.location.href = 'http://localhost:5000/api/auth/github'
+        window.location.href = 'https://shownext1-7sh63dv9.b4a.run/api/auth/github'
     }
 
     const doSubmitDiscord = () => { 
-        window.location.href = 'http://localhost:5000/api/auth/discord'
+        window.location.href = 'https://shownext1-7sh63dv9.b4a.run/api/auth/discord'
   }
   
   return (

@@ -8,7 +8,7 @@ import { socket } from "../../utils"
 import { queryClient } from "../../main"
 
 const messageNotificationsRead = async (sentData) => {
-  const { data } = axios.post("http://localhost:5000/api/notifyread", sentData, { withCredentials: true })
+  const { data } = axios.post("https://shownext1-7sh63dv9.b4a.run/api/notifyread", sentData, { withCredentials: true })
   return data
 }
 

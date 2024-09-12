@@ -9,7 +9,7 @@ import { PuffLoader, ClipLoader } from "react-spinners"
 
 const fetchProfilePosts = async ({ queryKey, pageParam }) => {
   const [, userId] = queryKey
-  const response = await axios.get(`http://localhost:5000/api/posts/user/${userId}?page=${pageParam}`, { withCredentials: true })
+  const response = await axios.get(`https://shownext1-7sh63dv9.b4a.run/api/posts/user/${userId}?page=${pageParam}`, { withCredentials: true })
   return response.data
 }
 

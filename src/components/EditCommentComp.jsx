@@ -32,7 +32,7 @@ export const EditCommentComp = ({ comment }) => {
 
     const sendComment = async (sentData) => {
         const { data } = await axios.put(
-            `http://localhost:5000/api/comments/${comment._id}`,
+            `https://shownext1-7sh63dv9.b4a.run/api/comments/${comment._id}`,
             sentData,
             { withCredentials: true }
         )

@@ -28,12 +28,12 @@ import { getCommonFollowers, getFollowersByProfileSummary } from "../utils/follo
 
 const fetchUser = async ({ queryKey }) => {
     const [, userId] = queryKey
-    const response = await axios.get(`http://localhost:5000/api/users/${userId}`, { withCredentials: true })
+    const response = await axios.get(`https://shownext1-7sh63dv9.b4a.run/api/users/${userId}`, { withCredentials: true })
     return response.data
 }
 
 const messageUser = async (sentData) => {
-        const { data } = await axios.post(`http://localhost:5000/api/chat`, sentData, { withCredentials: true });
+        const { data } = await axios.post(`https://shownext1-7sh63dv9.b4a.run/api/chat`, sentData, { withCredentials: true });
         return data
 }
 

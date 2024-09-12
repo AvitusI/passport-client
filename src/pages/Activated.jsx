@@ -9,7 +9,7 @@ import ActivatedCard from "../components/ActivatedCard"
 
 const activateAccount = async (sentData) => {
   const response = await axios.post(
-    "http://localhost:5000/api/users/activateAccount",
+    "https://shownext1-7sh63dv9.b4a.run/api/users/activateAccount",
     sentData,
     { withCredentials: true }
   )

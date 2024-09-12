@@ -43,27 +43,27 @@ const Post = ({ post }) => {
 
   const sendLike = async (sentData) => {
     if (likeStatus) {
-      const { data } = await axios.post("http://localhost:5000/api/posts/unlike", sentData, { withCredentials: true })
+      const { data } = await axios.post("https://shownext1-7sh63dv9.b4a.run/api/posts/unlike", sentData, { withCredentials: true })
       return data
     }
     else {
-      const { data } = await axios.post("http://localhost:5000/api/posts/like", sentData, { withCredentials: true })
+      const { data } = await axios.post("https://shownext1-7sh63dv9.b4a.run/api/posts/like", sentData, { withCredentials: true })
       return data
     }
   }
 
   const deletePost = async () => {
-    const { data } = await axios.delete(`http://localhost:5000/api/posts/${post._id}`, { withCredentials: true })
+    const { data } = await axios.delete(`https://shownext1-7sh63dv9.b4a.run/api/posts/${post._id}`, { withCredentials: true })
     return data
   }
 
   const sendBookmark = async () => {
     if (bookmarkedStatus) {
-      const { data } = await axios.post(`http://localhost:5000/api/posts/unbookmark/${post._id}`, {}, { withCredentials: true })
+      const { data } = await axios.post(`https://shownext1-7sh63dv9.b4a.run/api/posts/unbookmark/${post._id}`, {}, { withCredentials: true })
       return data
     }
     else {
-      const { data } = await axios.post(`http://localhost:5000/api/posts/bookmark/${post._id}`, {}, { withCredentials: true })
+      const { data } = await axios.post(`https://shownext1-7sh63dv9.b4a.run/api/posts/bookmark/${post._id}`, {}, { withCredentials: true })
       return data
     }
   }

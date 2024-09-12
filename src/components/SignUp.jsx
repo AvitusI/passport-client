@@ -15,7 +15,7 @@ const schema = yup.object().shape({
 })
 
 const signUp = async (sentData) => {
-  const response = await axios.post('http://localhost:5000/api/users', sentData, {withCredentials: true})
+  const response = await axios.post('https://shownext1-7sh63dv9.b4a.run/api/users', sentData, {withCredentials: true})
   return response.data;
 }
 

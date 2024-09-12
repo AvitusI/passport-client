@@ -33,7 +33,7 @@ const SignInComponent = () => {
 
   // The function to send the request to the server
   const loginUser = async (sentData) => {
-    const response = await axios.post('http://localhost:5000/api/auth', sentData, { withCredentials: true })
+    const response = await axios.post('https://shownext1-7sh63dv9.b4a.run/api/auth', sentData, { withCredentials: true })
     return response.data
   }
 

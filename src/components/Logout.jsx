@@ -7,7 +7,7 @@ import { Power } from "lucide-react";
 import { useUser } from "../context/UserContext";
 
 const logout = async () => {
-    const { data } = await axios.post("http://localhost:5000/api/auth/logout", {},  { withCredentials: true })
+    const { data } = await axios.post("https://shownext1-7sh63dv9.b4a.run/api/auth/logout", {},  { withCredentials: true })
     return data
 }
 

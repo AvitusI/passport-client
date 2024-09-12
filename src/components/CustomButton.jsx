@@ -19,11 +19,11 @@ const CustomButton = ({ data }) => {
 
     const sendFollowData = async (sentData) => {
         if (followStatus) {
-            const { data } = await axios.post(`http://localhost:5000/api/users/unfollow`, sentData, { withCredentials: true })
+            const { data } = await axios.post(`https://shownext1-7sh63dv9.b4a.run/api/users/unfollow`, sentData, { withCredentials: true })
             return data
         }
         else {
-            const { data } = await axios.post(`http://localhost:5000/api/users/follow`, sentData, { withCredentials: true })
+            const { data } = await axios.post(`https://shownext1-7sh63dv9.b4a.run/api/users/follow`, sentData, { withCredentials: true })
             return data
         }
     }

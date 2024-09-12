@@ -11,7 +11,7 @@ import Comment from "../components/Comment"
 
 const fetchPost = async ({ queryKey }) => {
     const [, id] = queryKey
-    const response = await axios.get(`http://localhost:5000/api/posts/${id}`, { withCredentials: true })
+    const response = await axios.get(`https://shownext1-7sh63dv9.b4a.run/api/posts/${id}`, { withCredentials: true })
     return response.data
 }
 

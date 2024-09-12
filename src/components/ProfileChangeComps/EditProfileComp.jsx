@@ -44,7 +44,7 @@ export const EditProfileComp = ({ user }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/image/upload",
+        "https://shownext1-7sh63dv9.b4a.run/api/image/upload",
         formData,
         { withCredentials: true }
       )
@@ -56,7 +56,7 @@ export const EditProfileComp = ({ user }) => {
     
     const sendProfile = async (sentData) => {
         const { data } = await axios.put(
-            `http://localhost:5000/api/users/${user._id}`,
+            `https://shownext1-7sh63dv9.b4a.run/api/users/${user._id}`,
             sentData,
             { withCredentials: true }
         )

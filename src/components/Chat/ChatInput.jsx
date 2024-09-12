@@ -15,7 +15,7 @@ const ChatInput = ({ selectedChat }) => {
   const { user, chatMessages, setChatMessages } = useUser()
 
   const sendMsg = async (messageObj) => { 
-    const { data } = await axios.post('http://localhost:5000/api/messages',  messageObj , { withCredentials: true })
+    const { data } = await axios.post('https://shownext1-7sh63dv9.b4a.run/api/messages',  messageObj , { withCredentials: true })
     return data
   }
   

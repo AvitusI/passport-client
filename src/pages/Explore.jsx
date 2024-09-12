@@ -7,7 +7,7 @@ import UserCard from "../components/UserCard"
 import { RingLoader } from "react-spinners"
 
 const fetchUsers = async () => {
-  const { data } = await axios.get(`http://localhost:5000/api/users`, { withCredentials: true })
+  const { data } = await axios.get(`https://shownext1-7sh63dv9.b4a.run/api/users`, { withCredentials: true })
   return data
 }
 

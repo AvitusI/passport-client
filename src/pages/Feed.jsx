@@ -8,9 +8,10 @@ import Sidebar from "../components/Sidebar"
 import PostCard from "../components/PostCard"
 import Post from "../components/Post"
 import Navbar from "../components/Navbar"
+import { useUser } from "../context/UserContext"
 
 const fetchUserFeed = async ({ pageParam }) => {
-    const response = await axios.get(`http://localhost:5000/api/feed?page=${pageParam}`, { withCredentials: true })
+    const response = await axios.get(`https://shownext1-7sh63dv9.b4a.run/api/feed?page=${pageParam}`, { withCredentials: true })
 
     return response.data
 }
@@ -18,6 +19,10 @@ const fetchUserFeed = async ({ pageParam }) => {
 const Feed = () => {
 
     const { ref, inView } = useInView()
+
+    const { user } = useUser()
+
+    console.log(JSON.stringify(user, null, " "))
 
     const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
         queryKey: ['items'],
